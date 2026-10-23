@@ -3,6 +3,12 @@
 Static project website with benchmark results, figures, and recorded model demos.
 No API key or backend is needed.
 
+- `index.html`: project overview with task demo links and collapsible results.
+- `demos.html`: recorded demos, selected by task, scenario and build.
+- Both pages use the invisible Statcounter project `13361926`.
+
+The Code buttons are intentionally disabled until a repository URL is supplied.
+
 ## Preview
 
 ```sh

@@ -47,6 +47,9 @@
   };
 
   let data, dist, current = 'Earnings', sortKey = null, sortDir = -1;
+  document.querySelector('.results-details')?.addEventListener('toggle', event => {
+    if (event.target.open && data && dist) render();
+  });
 
   const fmt = (v, d, sign) => {
     if (v === null || v === undefined || Number.isNaN(v)) return '—';

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recorded demos — LiveOption</title>
+<meta name="description" content="Explore recorded LiveOption decisions by task: earnings events, 0DTE intraday trading and portfolio overlays.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=2">
+</head>
+
+<body class="demos-page">
+<nav class="nav">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <span class="mark">◧</span>
+      <span><span class="lo-a">Live</span><span class="lo-b">Option</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#overview">Overview</a>
+      <a href="index.html#tasks">Tasks</a>
+      <a href="demos.html" class="active" aria-current="page">Demos</a>
+      <a href="index.html#cite">Citation</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-sm" type="button" disabled title="Repository link coming soon" aria-label="GitHub code — link coming soon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.558 21.923c.563.105.773-.244.773-.543v-2.094c-3.14.682-3.803-1.332-3.803-1.332-.514-1.306-1.255-1.654-1.255-1.654-1.026-.701.078-.687.078-.687 1.134.08 1.73 1.165 1.73 1.165 1.008 1.727 2.644 1.228 3.29.94.102-.73.394-1.228.716-1.51-2.507-.286-5.143-1.254-5.143-5.581 0-1.233.44-2.24 1.164-3.03-.117-.286-.505-1.434.11-2.987 0 0 .949-.304 3.094 1.16A10.76 10.76 0 0 1 12 6.142c.956.005 1.919.13 2.817.38 2.144-1.465 3.092-1.16 3.092-1.16.617 1.553.229 2.701.112 2.987.724.79 1.163 1.797 1.163 3.03 0 4.339-2.64 5.292-5.155 5.572.405.35.766 1.042.766 2.1v3.08c0 .302.204.653.78.542A11.252 11.252 0 0 0 12 .75Z"/></svg>Code</button>
+      <a class="btn btn-sm" href="index.html#cite">Paper</a>
+      <a class="btn btn-sm" href="index.html">Project home</a>
+    </div>
+  </div>
+</nav>
+<main>
+  <header class="demo-header">
+    <div class="container">
+      <a class="back-link" href="index.html">← LiveOption project</a>
+      <div class="eyebrow">Recorded demos</div>
+      <h1>Explore model decisions</h1>
+      <p>Choose a task, then a scenario. Compare the observation, reasoning and option orders from our recorded runs.</p>
+    </div>
+  </header>
+  <section class="demo-browser" aria-label="Recorded demo browser">
+    <div class="container">
+      <h2 class="step-heading">1 <span>Choose a task</span></h2>
+      <div class="demo-task-list" id="demo-tasks" aria-label="Task selection"></div>
+      <p class="note" id="demo-status" role="status" aria-live="polite">Loading recorded demos…</p>
+      <div class="pg demo-workspace" id="demo-workspace" hidden>
+        <aside class="pg-side">
+          <div class="panel">
+            <h2 class="step-heading">2 <span>Choose a scenario</span></h2>
+            <div class="scenario-list" id="scenario-list" aria-label="Scenario selection"></div>
+          </div>
+          <details class="recording-note">
+            <summary>About these recordings</summary>
+            <p class="note">These demos show the opening decision of each recorded run. Later observations include each model’s own portfolio. Builds may contain different news packets; answers from a different prompt are marked.</p>
+          </details>
+        </aside>
+        <div class="pg-main" aria-busy="false" id="demo-main">
+          <div class="panel scenario-header">
+            <div class="eyebrow" id="sc-task"></div>
+            <h2 id="sc-title">Choose a scenario</h2>
+            <p id="sc-blurb"></p>
+            <div class="controls">
+              <div class="seg" id="build-seg" aria-label="Recorded build"></div>
+              <button class="btn btn-sm" id="toggle-prompt" aria-expanded="false" aria-controls="prompt-box">Show observation</button>
+            </div>
+            <div class="prompt-box" id="prompt-box" hidden></div>
+            <p class="note" id="sc-meta"></p>
+          </div>
+          <div class="panel">
+            <h2 class="answers-heading">Recorded model decisions</h2>
+            <p class="note answers-intro">Reasoning, proposed option legs and orders resolved by the engine.</p>
+            <div class="answers" id="answers"></div>
+          </div>
+        </div>
+      </div>
+      <noscript><p>Enable JavaScript to browse the recorded demos.</p></noscript>
+    </div>
+  </section>
+</main>
+<footer><div class="container"><div>LiveOption · Recorded benchmark demos</div><a href="index.html">Back to project</a></div></footer>
+<script src="js/playground.js?v=2"></script>
+<!-- Default Statcounter code for LO https://liveoption.github.io/ -->
+<script type="text/javascript">
+var sc_project=13361926;
+var sc_invisible=1;
+var sc_security="5db59f12";
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js" async></script>
+<noscript><div class="statcounter"><a title="Web Analytics Made Easy -
+Statcounter" href="https://statcounter.com/" target="_blank"><img
+class="statcounter" src="https://c.statcounter.com/13361926/0/5db59f12/1/"
+alt="Web Analytics Made Easy - Statcounter"
+referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+<!-- End of Statcounter Code -->
+</body>
+</html>

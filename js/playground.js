@@ -4,7 +4,18 @@
   const $ = id => document.getElementById(id);
   const MODEL_META = {};   // filled from results.json so colours match
 
-  let index = [], scenario = null, build = null;
+  const TASKS = [
+    { id: 'earnings', key: 'Earnings', name: 'Earnings bet', tag: 'orange', title: 'Trade an earnings event', description: 'META and NVDA announcement decisions.' },
+    { id: '0dte', key: '0DTE', name: '0DTE intraday', tag: 'gold', title: 'Decide at the market open', description: 'SPY options expiring the same day.' },
+    { id: 'overlay', key: 'Overlay', name: 'Portfolio overlay', tag: '', title: 'Hedge an equity position', description: 'A protective overlay on a QQQ portfolio.' },
+  ];
+  let index = [], scenario = null, build = null, task = null, requestId = 0;
+
+  async function readJSON(path) {
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`Could not load ${path} (HTTP ${response.status})`);
+    return response.json();
+  }
 
   const esc = s => String(s ?? '').replace(/[&<>"]/g,
     c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -46,10 +57,10 @@
     </div>`;
   }
 
-  function answerCard(a, opts = {}) {
+  function answerCard(a) {
     const meta = MODEL_META[a.model] || {};
-    const colour = opts.mine ? 'var(--secondary)' : (meta.color || '#8994A8');
-    const name = opts.mine ? a.model : (meta.name || a.model);
+    const colour = meta.color || '#8994A8';
+    const name = meta.name || a.model;
     const s1 = a.stage1 || {};
     const v = viewOf(s1);
     const legs = s1.target_instruments || [];
@@ -58,11 +69,10 @@
     const confText = v.conf === undefined || v.conf === null ? ''
       : (typeof v.conf === 'number' ? v.conf.toFixed(2) : String(v.conf));
 
-    return `<div class="answer ${opts.mine ? 'mine' : ''}">
+    return `<div class="answer">
       <div class="who">
         <span class="swatch" style="background:${colour}"></span>
         ${esc(name)}
-        ${opts.mine ? '<span class="badge" style="background:rgba(252,82,0,.12);color:#c24000">your model</span>' : ''}
         ${a.build ? `<span class="badge">${esc(a.build)}</span>` : ''}
         ${a.samePrompt === false ? '<span class="badge" title="This model saw a slightly different observation">different prompt</span>' : ''}
       </div>
@@ -71,7 +81,7 @@
         ${confText ? `<span class="note" style="margin:0">confidence ${esc(confText)}</span>` : ''}
         ${v.move !== undefined && v.move !== null ? `<span class="note" style="margin:0">expected move ${esc(v.move)}%</span>` : ''}
       </div>
-      ${v.text ? `<div class="note" style="margin:.1rem 0 .4rem">${esc(String(v.text).slice(0, 300))}</div>` : ''}
+      ${v.text ? `<div class="answer-reasoning">${esc(String(v.text))}</div>` : ''}
       ${legs.length
         ? `<div class="legs">${legs.map(legRow).join('')}</div>`
         : '<div class="no-trade">No legs proposed at this decision.</div>'}
@@ -83,13 +93,9 @@
     </div>`;
   }
 
-  function renderAnswers(mine) {
-    const host = $('answers');
-    if (!scenario || !build) { host.innerHTML = ''; return; }
-    const parts = [];
-    if (mine) parts.push(answerCard(mine, { mine: true }));
-    parts.push(...build.answers.map(a => answerCard({ ...a, build: build.build })));
-    host.innerHTML = parts.join('');
+  function renderAnswers() {
+    $('answers').innerHTML = !scenario || !build ? ''
+      : build.answers.map(a => answerCard({ ...a, build: build.build })).join('');
   }
 
   function renderBuildSeg() {
@@ -97,15 +103,18 @@
     seg.innerHTML = '';
     scenario.groups.forEach(g => {
       const b = document.createElement('button');
-      const news = g.newsHeadlines
-        ? `${g.newsHeadlines} headlines` : 'no news feed';
-      b.textContent = `${g.build} · ${g.answers.length} models · ${news}`;
+      b.type = 'button';
+      b.textContent = g.build === 'release' ? 'Release recordings' : `${g.build} recordings`;
+      b.setAttribute('aria-pressed', String(g === build));
       b.className = g === build ? 'on' : '';
       b.onclick = () => {
         build = g;
-        [...seg.children].forEach(c => c.classList.toggle('on', c === b));
+        [...seg.children].forEach(c => {
+          c.classList.toggle('on', c === b);
+          c.setAttribute('aria-pressed', String(c === b));
+        });
         $('prompt-box').textContent = g.user;
-        renderAnswers(null);
+        renderAnswers();
         renderMeta();
       };
       seg.appendChild(b);
@@ -125,47 +134,109 @@
   }
 
   async function selectScenario(entry, btn) {
-    [...$('scenario-list').children].forEach(c => c.classList.toggle('on', c === btn));
+    const currentRequest = ++requestId;
+    [...$('scenario-list').children].forEach(c => {
+      c.classList.toggle('on', c === btn);
+      c.setAttribute('aria-pressed', String(c === btn));
+    });
+    scenario = null;
+    build = null;
     $('sc-title').textContent = 'Loading…';
-    scenario = await fetch(`data/scenarios/${entry.id}.json`).then(r => r.json());
-    build = scenario.groups[0];
-    $('sc-title').textContent = `${scenario.task} · ${scenario.title}`;
-    $('sc-blurb').textContent = scenario.blurb;
-    $('prompt-box').textContent = build.user;
-    renderBuildSeg();
-    renderMeta();
-    renderAnswers(null);
+    $('sc-blurb').textContent = '';
+    $('sc-task').textContent = task.name;
+    $('sc-meta').textContent = '';
+    $('build-seg').innerHTML = '';
+    $('answers').innerHTML = '';
+    $('prompt-box').textContent = '';
+    $('prompt-box').hidden = true;
+    $('toggle-prompt').textContent = 'Show observation';
+    $('toggle-prompt').setAttribute('aria-expanded', 'false');
+    $('toggle-prompt').disabled = true;
+    $('demo-main').setAttribute('aria-busy', 'true');
+    try {
+      const loaded = await readJSON(`data/scenarios/${entry.id}.json`);
+      if (currentRequest !== requestId) return;
+      if (!loaded.groups?.length) throw new Error('No recorded decisions are available for this scenario.');
+      scenario = loaded;
+      build = scenario.groups[0];
+      $('sc-title').textContent = scenario.title;
+      $('sc-blurb').textContent = scenario.blurb;
+      $('prompt-box').textContent = build.user;
+      renderBuildSeg();
+      renderMeta();
+      renderAnswers();
+      $('toggle-prompt').disabled = false;
+      const url = new URL(window.location.href);
+      url.searchParams.set('task', task.id);
+      url.searchParams.set('scenario', entry.id);
+      window.history.replaceState(null, '', url);
+    } catch (error) {
+      if (currentRequest !== requestId) return;
+      $('sc-title').textContent = 'Demo unavailable';
+      $('sc-blurb').textContent = error.message;
+    } finally {
+      if (currentRequest === requestId) $('demo-main').setAttribute('aria-busy', 'false');
+    }
   }
 
-  function buildList() {
+  function selectTask(selected, preferredScenario) {
+    task = selected;
+    [...$('demo-tasks').children].forEach(b => {
+      const active = b.dataset.task === task.id;
+      b.classList.toggle('on', active);
+      b.setAttribute('aria-pressed', String(active));
+    });
+    const entries = index.filter(e => e.task === task.key);
     const host = $('scenario-list');
     host.innerHTML = '';
-    index.forEach(e => {
+    $('demo-status').hidden = true;
+    $('demo-workspace').hidden = false;
+    entries.forEach(e => {
       const b = document.createElement('button');
+      b.type = 'button';
       b.className = 'scenario';
-      b.innerHTML = `<div class="t">${esc(e.title)}</div>
-                     <div class="s">${esc(e.task)} · ${esc(e.ticker)}</div>`;
+      b.innerHTML = `<div class="t">${esc(e.title)}</div><div class="s">${esc(e.ticker)}</div>`;
       b.onclick = () => selectScenario(e, b);
+      b.dataset.scenario = e.id;
       host.appendChild(b);
     });
-    if (index.length) host.firstChild.click();
+    const first = [...host.children].find(b => b.dataset.scenario === preferredScenario) || host.firstChild;
+    if (first) first.click();
+  }
+
+  function buildTaskList() {
+    const host = $('demo-tasks');
+    TASKS.filter(t => index.some(e => e.task === t.key)).forEach(t => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'card demo-task';
+      b.dataset.task = t.id;
+      b.setAttribute('aria-pressed', 'false');
+      b.innerHTML = `<span class="tag ${t.tag}">${esc(t.name)}</span><h3>${esc(t.title)}</h3><p>${esc(t.description)}</p><span class="demo-link">Browse scenarios <span aria-hidden="true">→</span></span>`;
+      b.onclick = () => selectTask(t);
+      host.appendChild(b);
+    });
+    $('demo-status').textContent = 'Select a task above to browse its recorded scenarios.';
+    const params = new URLSearchParams(window.location.search);
+    const requestedTask = TASKS.find(t => t.id === params.get('task'));
+    if (requestedTask) selectTask(requestedTask, params.get('scenario'));
   }
 
   async function init() {
-    const results = await fetch('data/results.json').then(r => r.json());
+    const [results, scenarios] = await Promise.all([readJSON('data/results.json'), readJSON('data/scenarios/index.json')]);
     results.models.forEach(m => { MODEL_META[m.id] = m; });
-    index = await fetch('data/scenarios/index.json').then(r => r.json());
-    buildList();
+    index = scenarios;
+    buildTaskList();
 
     $('toggle-prompt').onclick = () => {
       const box = $('prompt-box');
       box.hidden = !box.hidden;
-      $('toggle-prompt').textContent = box.hidden ? 'Show full prompt' : 'Hide prompt';
+      $('toggle-prompt').textContent = box.hidden ? 'Show observation' : 'Hide observation';
+      $('toggle-prompt').setAttribute('aria-expanded', String(!box.hidden));
     };
   }
 
   init().catch(e => {
-    $('sc-title').textContent = 'Playground unavailable';
-    $('sc-blurb').textContent = `Could not load the scenarios: ${e.message}`;
+    $('demo-status').textContent = `Could not load the demos: ${e.message}`;
   });
 })();
