@@ -3,12 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LiveOption — Evaluating LLM Agents in Structured Option Trading</title>
-<meta name="description" content="A benchmark for LLM agents in option markets: portfolio overlays, earnings events and 0DTE intraday trading, with interactive results and recorded model demos.">
+<title data-i18n="meta.homeTitle">LiveOption — Evaluating LLM Agents in Structured Option Trading</title>
+<meta name="description" content="A benchmark for LLM agents in option markets: portfolio overlays, earnings events and 0DTE intraday trading, with interactive results and recorded model demos." data-i18n-content="meta.homeDescription">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=2">
+<script src="js/locales.js?v=3"></script>
+<script src="js/i18n.js?v=3"></script>
+<link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
@@ -19,34 +21,35 @@
       <span><span class="lo-a">Live</span><span class="lo-b">Option</span></span>
     </a>
     <div class="nav-links">
-      <a href="#overview">Overview</a>
-      <a href="#tasks">Tasks</a>
-      <a href="#demos">Demos</a>
-      <a href="#cite">Citation</a>
+      <a href="#overview"><span data-i18n="nav.overview">Overview</span></a>
+      <a href="#tasks"><span data-i18n="nav.tasks">Tasks</span></a>
+      <a href="#demos"><span data-i18n="nav.demos">Demos</span></a>
+      <a href="#cite"><span data-i18n="nav.citation">Citation</span></a>
     </div>
     <div class="nav-actions">
-      <button class="btn btn-sm" type="button" disabled title="Repository link coming soon" aria-label="GitHub code — link coming soon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.558 21.923c.563.105.773-.244.773-.543v-2.094c-3.14.682-3.803-1.332-3.803-1.332-.514-1.306-1.255-1.654-1.255-1.654-1.026-.701.078-.687.078-.687 1.134.08 1.73 1.165 1.73 1.165 1.008 1.727 2.644 1.228 3.29.94.102-.73.394-1.228.716-1.51-2.507-.286-5.143-1.254-5.143-5.581 0-1.233.44-2.24 1.164-3.03-.117-.286-.505-1.434.11-2.987 0 0 .949-.304 3.094 1.16A10.76 10.76 0 0 1 12 6.142c.956.005 1.919.13 2.817.38 2.144-1.465 3.092-1.16 3.092-1.16.617 1.553.229 2.701.112 2.987.724.79 1.163 1.797 1.163 3.03 0 4.339-2.64 5.292-5.155 5.572.405.35.766 1.042.766 2.1v3.08c0 .302.204.653.78.542A11.252 11.252 0 0 0 12 .75Z"/></svg>Code</button>
-      <a class="btn btn-sm" href="#cite">Paper</a>
-      <a class="btn btn-sm btn-primary" href="demos.html" target="_blank" rel="noopener">View demos <span aria-hidden="true">↗</span></a>
+      <select class="language-select" data-language-select aria-label="Language" data-i18n-aria-label="nav.language">
+        <option value="en" lang="en">EN</option>
+        <option value="cn" lang="zh-CN">中文</option>
+        <option value="jp" lang="ja">日本語</option>
+      </select>
+      <button class="btn btn-sm" type="button" disabled title="Repository link coming soon" aria-label="GitHub code — link coming soon" data-i18n-title="nav.codeSoon" data-i18n-aria-label="nav.codeAria"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.558 21.923c.563.105.773-.244.773-.543v-2.094c-3.14.682-3.803-1.332-3.803-1.332-.514-1.306-1.255-1.654-1.255-1.654-1.026-.701.078-.687.078-.687 1.134.08 1.73 1.165 1.73 1.165 1.008 1.727 2.644 1.228 3.29.94.102-.73.394-1.228.716-1.51-2.507-.286-5.143-1.254-5.143-5.581 0-1.233.44-2.24 1.164-3.03-.117-.286-.505-1.434.11-2.987 0 0 .949-.304 3.094 1.16A10.76 10.76 0 0 1 12 6.142c.956.005 1.919.13 2.817.38 2.144-1.465 3.092-1.16 3.092-1.16.617 1.553.229 2.701.112 2.987.724.79 1.163 1.797 1.163 3.03 0 4.339-2.64 5.292-5.155 5.572.405.35.766 1.042.766 2.1v3.08c0 .302.204.653.78.542A11.252 11.252 0 0 0 12 .75Z"/></svg><span data-i18n="nav.code">Code</span></button>
+      <a class="btn btn-sm" href="#cite"><span data-i18n="nav.paper">Paper</span></a>
+      <a class="btn btn-sm btn-primary" href="demos.html" target="_blank" rel="noopener"><span data-i18n="nav.viewDemos">View demos</span> <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 </nav>
 
 <header class="hero" id="top">
   <div class="container">
-    <div class="pill">NeurIPS 2026 · Evaluation and Dataset Track</div>
+    <div class="pill"><span data-i18n="hero.track">NeurIPS 2026 · Evaluation and Dataset Track</span></div>
     <h1><span class="a">Live</span><span class="b">Option</span></h1>
-    <p class="tagline">Evaluating LLM Agents in Structured Option Trading with Nonlinear Payoffs</p>
+    <p class="tagline"><span data-i18n="hero.tagline">Evaluating LLM Agents in Structured Option Trading with Nonlinear Payoffs</span></p>
     <p class="lede">
-      Equity benchmarks ask whether a model can call direction. Options ask
-      something harder: construct a position whose payoff is nonlinear, under
-      margin and liquidity constraints, and carry it through an event. LiveOption
-      is a replay benchmark that puts eight LLM agents through three such tasks
-      and reports what they actually did, not only what they earned.
+      <span data-i18n="hero.lede">Equity benchmarks ask whether a model can call direction. Options ask something harder: construct a position whose payoff is nonlinear, under margin and liquidity constraints, and carry it through an event. LiveOption is a replay benchmark that puts eight LLM agents through three such tasks and reports what they actually did, not only what they earned.</span>
     </p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="demos.html" target="_blank" rel="noopener">Explore recorded demos <span aria-hidden="true">↗</span></a>
-      <a class="btn" href="#cite">Read the paper</a>
+      <a class="btn btn-primary" href="demos.html" target="_blank" rel="noopener"><span data-i18n="hero.explore">Explore recorded demos</span> <span aria-hidden="true">↗</span></a>
+      <a class="btn" href="#cite"><span data-i18n="hero.readPaper">Read the paper</span></a>
     </div>
 
 
@@ -56,28 +59,28 @@
 <section id="demos">
   <div class="container">
     <div class="sec-head">
-      <div class="eyebrow">Recorded demos</div>
-      <h2>See the agents in action</h2>
-      <p>Explore the observations, reasoning and option orders from our recorded runs. Choose a task to open its demos.</p>
+      <div class="eyebrow"><span data-i18n="demos.eyebrow">Recorded demos</span></div>
+      <h2><span data-i18n="home.demoTitle">See the agents in action</span></h2>
+      <p><span data-i18n="home.demoIntro">Explore the observations, reasoning and option orders from our recorded runs. Choose a task to open its demos.</span></p>
     </div>
     <div class="cards demo-previews">
       <a class="card demo-preview" href="demos.html?task=earnings" target="_blank" rel="noopener">
-        <span class="tag orange">Earnings bet</span>
-        <h3>Trade an earnings event</h3>
-        <p>Compare decisions around the META and NVDA announcements, including proposed spreads and resolved orders.</p>
-        <span class="demo-link">Explore earnings demos <span aria-hidden="true">↗</span></span>
+        <span class="tag orange"><span data-i18n="task.earnings.name">Earnings bet</span></span>
+        <h3><span data-i18n="task.earnings.title">Trade an earnings event</span></h3>
+        <p><span data-i18n="task.earnings.preview">Compare decisions around the META and NVDA announcements, including proposed spreads and resolved orders.</span></p>
+        <span class="demo-link"><span data-i18n="task.earnings.link">Explore earnings demos</span> <span aria-hidden="true">↗</span></span>
       </a>
       <a class="card demo-preview" href="demos.html?task=0dte" target="_blank" rel="noopener">
-        <span class="tag gold">0DTE intraday</span>
-        <h3>Decide at the market open</h3>
-        <p>Inspect the opening decisions from two SPY sessions with same-day expiry options.</p>
-        <span class="demo-link">Explore 0DTE demos <span aria-hidden="true">↗</span></span>
+        <span class="tag gold"><span data-i18n="task.0dte.name">0DTE intraday</span></span>
+        <h3><span data-i18n="task.0dte.title">Decide at the market open</span></h3>
+        <p><span data-i18n="task.0dte.preview">Inspect the opening decisions from two SPY sessions with same-day expiry options.</span></p>
+        <span class="demo-link"><span data-i18n="task.0dte.link">Explore 0DTE demos</span> <span aria-hidden="true">↗</span></span>
       </a>
       <a class="card demo-preview" href="demos.html?task=overlay" target="_blank" rel="noopener">
-        <span class="tag">Portfolio overlay</span>
-        <h3>Hedge an equity position</h3>
-        <p>See how agents propose protective option positions for an existing QQQ portfolio.</p>
-        <span class="demo-link">Explore overlay demo <span aria-hidden="true">↗</span></span>
+        <span class="tag"><span data-i18n="task.overlay.name">Portfolio overlay</span></span>
+        <h3><span data-i18n="task.overlay.title">Hedge an equity position</span></h3>
+        <p><span data-i18n="task.overlay.preview">See how agents propose protective option positions for an existing QQQ portfolio.</span></p>
+        <span class="demo-link"><span data-i18n="task.overlay.link">Explore overlay demo</span> <span aria-hidden="true">↗</span></span>
       </a>
     </div>
   </div>
@@ -87,34 +90,19 @@
 <section id="overview">
   <div class="container narrow">
     <div class="sec-head">
-      <div class="eyebrow">Overview</div>
-      <h2>What the benchmark measures</h2>
+      <div class="eyebrow"><span data-i18n="nav.overview">Overview</span></div>
+      <h2><span data-i18n="overview.title">What the benchmark measures</span></h2>
     </div>
     <p>
-      An option position is a bet on more than direction. Its value moves with
-      the underlying, with implied volatility, and with the passage of time,
-      and the three pull against each other. An agent that is right about
-      where a stock is going can still lose, because it paid too much for the
-      volatility it bought or carried the position one day too long.
+      <span data-i18n="overview.options">An option position is a bet on more than direction. Its value moves with the underlying, with implied volatility, and with the passage of time, and the three pull against each other. An agent that is right about where a stock is going can still lose, because it paid too much for the volatility it bought or carried the position one day too long.</span>
     </p>
     <p>
-      LiveOption replays 2025 market data through a brokerage-style engine
-      that enforces margin, multi-leg position management and contract
-      consistency. At every decision step the agent is shown only information
-      timestamped before that step. We record the full trace — the thesis
-      text, the intent stream, the fill log and the Greek snapshots — and
-      evaluate on three axes: what the agent earned, how it behaved, and what
-      it stopped doing when we removed part of its context.
+      <span data-i18n="overview.replay">LiveOption replays 2025 market data through a brokerage-style engine that enforces margin, multi-leg position management and contract consistency. At every decision step the agent is shown only information timestamped before that step. We record the full trace — the thesis text, the intent stream, the fill log and the Greek snapshots — and evaluate on three axes: what the agent earned, how it behaved, and what it stopped doing when we removed part of its context.</span>
     </p>
 
     <div class="callout teal">
-      <strong>The headline result is negative, and that is the point.</strong>
-      Median episode returns are below zero for all eight models in both
-      episodic tasks, and only the widest earnings gap in the panel separates
-      two models after correction for multiple comparisons. What does vary
-      measurably is behaviour: participation, tenor, structure mix and tail
-      risk. That is the argument for reporting distributions and interventions
-      rather than mean returns.
+      <strong><span data-i18n="overview.findingTitle">The headline result is negative, and that is the point.</span></strong>
+      <span data-i18n="overview.finding">Median episode returns are below zero for all eight models in both episodic tasks, and only the widest earnings gap in the panel separates two models after correction for multiple comparisons. What does vary measurably is behaviour: participation, tenor, structure mix and tail risk. That is the argument for reporting distributions and interventions rather than mean returns.</span>
     </div>
   </div>
 </section>
@@ -122,44 +110,30 @@
 <section class="alt" id="tasks">
   <div class="container">
     <div class="sec-head">
-      <div class="eyebrow">Task suites</div>
-      <h2>Three ways an agent can be wrong</h2>
-      <p>Each suite isolates a different failure mode, and each one is in the demos.</p>
+      <div class="eyebrow"><span data-i18n="tasks.eyebrow">Task suites</span></div>
+      <h2><span data-i18n="tasks.title">Three ways an agent can be wrong</span></h2>
+      <p><span data-i18n="tasks.intro">Each suite isolates a different failure mode, and each one is in the demos.</span></p>
     </div>
     <div class="cards">
       <div class="card">
-        <span class="tag">Portfolio overlay</span>
-        <h3>Hedging and covered calls</h3>
+        <span class="tag"><span data-i18n="task.overlay.name">Portfolio overlay</span></span>
+        <h3><span data-i18n="tasks.overlayTitle">Hedging and covered calls</span></h3>
         <p>
-          A year-long option overlay on an existing equity position, five
-          assets per mandate. The question is not whether the stock went up —
-          it is whether the overlay beat simply holding the stock. Active
-          return is negative for all eight models under hedging and seven of
-          eight under covered calls, while drawdown falls for seven of eight.
-          The overlay changes the risk profile; it does not add alpha.
+          <span data-i18n="tasks.overlayBody">A year-long option overlay on an existing equity position, five assets per mandate. The question is not whether the stock went up — it is whether the overlay beat simply holding the stock. Active return is negative for all eight models under hedging and seven of eight under covered calls, while drawdown falls for seven of eight. The overlay changes the risk profile; it does not add alpha.</span>
         </p>
       </div>
       <div class="card">
-        <span class="tag orange">Earnings bet</span>
-        <h3>Event-driven volatility</h3>
+        <span class="tag orange"><span data-i18n="task.earnings.name">Earnings bet</span></span>
+        <h3><span data-i18n="tasks.earningsTitle">Event-driven volatility</span></h3>
         <p>
-          Enter two sessions before a scheduled announcement and carry the
-          position through it. Implied volatility is at its highest exactly
-          when the agent is deciding what to pay. Eighty-three percent of
-          opened structures are net debit: the panel buys premium into a
-          scheduled volatility contraction, and theta is large and negative
-          for every model.
+          <span data-i18n="tasks.earningsBody">Enter two sessions before a scheduled announcement and carry the position through it. Implied volatility is at its highest exactly when the agent is deciding what to pay. Eighty-three percent of opened structures are net debit: the panel buys premium into a scheduled volatility contraction, and theta is large and negative for every model.</span>
         </p>
       </div>
       <div class="card">
-        <span class="tag gold">0DTE intraday</span>
-        <h3>Same-day expiry on SPY</h3>
+        <span class="tag gold"><span data-i18n="task.0dte.name">0DTE intraday</span></span>
+        <h3><span data-i18n="tasks.0dteTitle">Same-day expiry on SPY</span></h3>
         <p>
-          102 sessions of options that expire at the close, where gamma and
-          theta are both extreme and a position left open is a position
-          decaying. Every model loses on the majority of sessions. The three
-          positive means in the panel rest on a handful of right-tail
-          sessions and do not survive a realistic half-spread charge.
+          <span data-i18n="tasks.0dteBody">102 sessions of options that expire at the close, where gamma and theta are both extreme and a position left open is a position decaying. Every model loses on the majority of sessions. The three positive means in the panel rest on a handful of right-tail sessions and do not survive a realistic half-spread charge.</span>
         </p>
       </div>
     </div>
@@ -169,26 +143,17 @@
 <section id="framework">
   <div class="container narrow">
     <div class="sec-head">
-      <div class="eyebrow">Framework</div>
-      <h2>What the agent sees, and what it may do</h2>
+      <div class="eyebrow"><span data-i18n="framework.eyebrow">Framework</span></div>
+      <h2><span data-i18n="framework.title">What the agent sees, and what it may do</span></h2>
     </div>
     <p>
-      Raw option chains are too large and too redundant to hand a model
-      directly. The engine summarises the volatility surface at a small set of
-      anchor points over moneyness and tenor, and quantises the chain into
-      expiry buckets and moneyness levels, so an agent specifies a trade at
-      the level of financial intent rather than picking among hundreds of
-      contracts. Every order then passes a risk layer that enforces margin
-      feasibility, per-trade loss caps and exposure limits before it reaches
-      the matcher.
+      <span data-i18n="framework.body">Raw option chains are too large and too redundant to hand a model directly. The engine summarises the volatility surface at a small set of anchor points over moneyness and tenor, and quantises the chain into expiry buckets and moneyness levels, so an agent specifies a trade at the level of financial intent rather than picking among hundreds of contracts. Every order then passes a risk layer that enforces margin feasibility, per-trade loss caps and exposure limits before it reaches the matcher.</span>
     </p>
     <figure>
-      <img src="img/action_composition.png" alt="Two bar charts: the call versus put split of intraday 0DTE legs, and the mix of traded structures in the earnings task, for eight models.">
+      <img src="img/action_composition.png" alt="Two bar charts: the call versus put split of intraday 0DTE legs, and the mix of traded structures in the earnings task, for eight models." data-i18n-alt="figure.alt">
       <figcaption>
-        What the agents actually traded. <strong>(A)</strong> call versus put
-        legs in intraday 0DTE. <strong>(B)</strong> the mix of structures
-        opened in the earnings task. Vertical and two-leg positions dominate
-        for most of the panel.
+        <span data-i18n="figure.intro">What the agents actually traded.</span> <strong>(A)</strong> <span data-i18n="figure.a">call versus put legs in intraday 0DTE.</span> <strong>(B)</strong> <span data-i18n="figure.b">the mix of structures opened in the earnings task. Vertical and two-leg positions dominate for most of the panel.</span>
+      <span class="original-figure-note" data-i18n="figure.original">Figures from the paper are shown in their original language.</span>
       </figcaption>
     </figure>
   </div>
@@ -197,9 +162,9 @@
 <section class="alt" id="results">
   <div class="container">
     <details class="results-details">
-      <summary><span><span class="eyebrow">Supporting results</span><span class="results-title">Benchmark tables and return distributions</span><span class="note">Expand to explore the evaluation statistics.</span></span><span class="details-icon" aria-hidden="true">+</span></summary>
+      <summary><span><span class="eyebrow"><span data-i18n="results.eyebrow">Supporting results</span></span><span class="results-title"><span data-i18n="results.title">Benchmark tables and return distributions</span></span><span class="note"><span data-i18n="results.expand">Expand to explore the evaluation statistics.</span></span></span><span class="details-icon" aria-hidden="true">+</span></summary>
       <div class="results-content">
-        <p class="note">Sort any column. Mean returns include 95% percentile bootstrap intervals from 10,000 episode resamples.</p>
+        <p class="note"><span data-i18n="results.intro">Sort any column. Mean returns include 95% percentile bootstrap intervals from 10,000 episode resamples.</span></p>
 
     <div class="controls">
       <div class="seg" id="task-seg"></div>
@@ -215,22 +180,15 @@
     <div class="note" id="results-note"></div>
 
     <div style="margin-top:3rem">
-      <h3 style="text-align:center">Where the returns come from</h3>
+      <h3 style="text-align:center"><span data-i18n="results.distributionTitle">Where the returns come from</span></h3>
       <p class="note" style="text-align:center;max-width:680px;margin:0 auto 1rem">
-        Each dot is one episode. The box spans the interquartile range and the
-        line is the median. The means sit to the right of the medians because
-        a few right-tail episodes carry them.
+        <span data-i18n="results.distributionIntro">Each dot is one episode. The box spans the interquartile range and the line is the median. The means sit to the right of the medians because a few right-tail episodes carry them.</span>
       </p>
       <div id="dist-chart"></div>
     </div>
 
     <div class="callout" style="margin-top:2.5rem">
-      <strong>One caveat the panel carries.</strong> Six models were served
-      through a single hosted provider; GPT-5.6-Terra and Gemini-3-Flash were
-      reached through a separate gateway on a later engine build, and that
-      build supplied no news headlines in the earnings observation. They read a
-      different page from the other six on that task. The demo labels
-      which build each recorded answer came from for exactly this reason.
+      <strong><span data-i18n="results.caveatTitle">One caveat the panel carries.</span></strong> <span data-i18n="results.caveat">Six models were served through a single hosted provider; GPT-5.6-Terra and Gemini-3-Flash were reached through a separate gateway on a later engine build, and that build supplied no news headlines in the earnings observation. They read a different page from the other six on that task. The demo labels which build each recorded answer came from for exactly this reason.</span>
     </div>
       </div>
     </details>
@@ -240,10 +198,10 @@
 <section class="alt" id="cite">
   <div class="container narrow">
     <div class="sec-head">
-      <div class="eyebrow">Citation</div>
-      <h2>How to cite</h2>
+      <div class="eyebrow"><span data-i18n="nav.citation">Citation</span></div>
+      <h2><span data-i18n="citation.title">How to cite</span></h2>
     </div>
-    <div class="cite">@inproceedings{liveoption2026,
+    <div class="cite" lang="en">@inproceedings{liveoption2026,
   title     = {LiveOption: Evaluating LLM Agents in Structured Option
                Trading with Nonlinear Payoffs},
   author    = {Anonymous},
@@ -251,22 +209,20 @@
   year      = {2026}
 }</div>
     <div class="callout" style="margin-top:1.5rem">
-      <strong>This paper does not provide investment advice.</strong> The
-      methods discussed may involve substantial risk and could result in
-      significant financial loss.
+      <strong><span data-i18n="citation.disclaimerTitle">This paper does not provide investment advice.</span></strong> <span data-i18n="citation.disclaimer">The methods discussed may involve substantial risk and could result in significant financial loss.</span>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="container">
-    <div>LiveOption · a benchmark for LLM agents in option markets</div>
-    <div>Results from the 2025 evaluation window · figures and tables match the manuscript</div>
+    <div><span data-i18n="footer.home">LiveOption · a benchmark for LLM agents in option markets</span></div>
+    <div><span data-i18n="footer.results">Results from the 2025 evaluation window · figures and tables match the manuscript</span></div>
   </div>
 </footer>
 
-<script src="js/charts.js"></script>
-<script src="js/results.js?v=2"></script>
+<script src="js/charts.js?v=3"></script>
+<script src="js/results.js?v=3"></script>
 <!-- Default Statcounter code for LO https://liveoption.github.io/ -->
 <script type="text/javascript">
 var sc_project=13361926;

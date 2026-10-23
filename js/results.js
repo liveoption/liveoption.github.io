@@ -3,48 +3,43 @@
    page and the manuscript round once, in the same place. */
 
 (function () {
+  const { t, number } = window.LOI18n;
   const TASKS = [
-    { key: 'Earnings', label: 'Earnings Bet', kind: 'episode' },
-    { key: '0DTE', label: '0DTE Intraday', kind: 'episode' },
-    { key: 'Hedging', label: 'Overlay · Hedging', kind: 'overlay' },
-    { key: 'Covered Call', label: 'Overlay · Covered Call', kind: 'overlay' },
-    { key: 'Greeks', label: 'Greek attribution', kind: 'greeks' },
+    { key: 'Earnings', labelKey: 'results.task.earnings', kind: 'episode' },
+    { key: '0DTE', labelKey: 'results.task.0dte', kind: 'episode' },
+    { key: 'Hedging', labelKey: 'results.task.hedging', kind: 'overlay' },
+    { key: 'Covered Call', labelKey: 'results.task.covered', kind: 'overlay' },
+    { key: 'Greeks', labelKey: 'results.task.greeks', kind: 'greeks' },
   ];
 
   const EPISODE_COLS = [
-    { k: 'model', t: 'Model', type: 'model' },
-    { k: 'n', t: 'n', d: 0 },
-    { k: 'mean', t: 'Mean %', d: 2, sign: true, ci: true },
-    { k: 'median', t: 'Median %', d: 2, sign: true },
-    { k: 'win', t: 'Win %', d: 1 },
-    { k: 'noTrade', t: 'No-trade %', d: 1 },
-    { k: 'pf', t: 'PF', d: 2 },
+    { k: 'model', labelKey: 'column.model', type: 'model' },
+    { k: 'n', labelKey: 'column.n', d: 0 },
+    { k: 'mean', labelKey: 'column.mean', d: 2, sign: true, ci: true },
+    { k: 'median', labelKey: 'column.median', d: 2, sign: true },
+    { k: 'win', labelKey: 'column.win', d: 1 },
+    { k: 'noTrade', labelKey: 'column.noTrade', d: 1 },
+    { k: 'pf', labelKey: 'column.pf', d: 2 },
   ];
   const OVERLAY_COLS = [
-    { k: 'model', t: 'Model', type: 'model' },
-    { k: 'active', t: 'Active return (pp)', d: 2, sign: true },
-    { k: 'ir', t: 'Information ratio', d: 2, sign: true },
-    { k: 'ddReduction', t: 'Drawdown reduction (pp)', d: 2, sign: true },
-    { k: 'assetsPositive', t: 'Assets positive', type: 'frac' },
+    { k: 'model', labelKey: 'column.model', type: 'model' },
+    { k: 'active', labelKey: 'column.active', d: 2, sign: true },
+    { k: 'ir', labelKey: 'column.ir', d: 2, sign: true },
+    { k: 'ddReduction', labelKey: 'column.ddReduction', d: 2, sign: true },
+    { k: 'assetsPositive', labelKey: 'column.assetsPositive', type: 'frac' },
   ];
   const GREEK_COLS = [
-    { k: 'model', t: 'Model', type: 'model' },
-    { k: 'task', t: 'Task', type: 'text' },
-    { k: 'cases', t: 'Episodes', d: 0 },
+    { k: 'model', labelKey: 'column.model', type: 'model' },
+    { k: 'task', labelKey: 'column.task', type: 'text' },
+    { k: 'cases', labelKey: 'column.cases', d: 0 },
     { k: 'delta', t: 'δ', d: 0, sign: true },
     { k: 'gamma', t: 'γ', d: 0, sign: true },
     { k: 'theta', t: 'θ', d: 0, sign: true },
     { k: 'vega', t: 'ν', d: 0, sign: true },
-    { k: 'residual', t: 'Residual', d: 0, sign: true },
+    { k: 'residual', labelKey: 'column.residual', d: 0, sign: true },
   ];
 
-  const NOTES = {
-    Earnings: 'Entered two sessions before a scheduled announcement and carried through it. n varies because individual cases were excluded per model.',
-    '0DTE': 'SPY options expiring at the close, 102 sessions per model, identical set across the panel.',
-    Hedging: 'Protective overlay on an existing equity position, five assets. Active return is against the matched buy-and-hold portfolio.',
-    'Covered Call': 'Yield overlay on the same five assets. Descriptive only at five assets per cell.',
-    Greeks: 'Mean PnL per episode attributed to each first-order Greek, in dollars, plus the residual a first-order expansion cannot explain.',
-  };
+  const NOTES = { Earnings: 'results.note.earnings', '0DTE': 'results.note.0dte', Hedging: 'results.note.hedging', 'Covered Call': 'results.note.covered', Greeks: 'results.note.greeks' };
 
   let data, dist, current = 'Earnings', sortKey = null, sortDir = -1;
   document.querySelector('.results-details')?.addEventListener('toggle', event => {
@@ -53,8 +48,7 @@
 
   const fmt = (v, d, sign) => {
     if (v === null || v === undefined || Number.isNaN(v)) return '—';
-    const s = Number(v).toFixed(d);
-    return sign && v > 0 ? `+${s}` : s;
+    return number(Number(v), d, sign);
   };
   const cls = v => (v > 0 ? 'pos' : v < 0 ? 'neg' : '');
 
@@ -82,7 +76,7 @@
     head.innerHTML = '';
     cols.forEach(c => {
       const th = document.createElement('th');
-      th.textContent = c.t;
+      th.textContent = c.labelKey ? t(c.labelKey) : c.t;
       if (sortKey === c.k) th.classList.add('sorted');
       const a = document.createElement('span');
       a.className = 'arrow';
@@ -101,7 +95,7 @@
       rows = [...rows].sort((a, b) => {
         const av = sortKey === 'model' ? a._m.name : a[sortKey];
         const bv = sortKey === 'model' ? b._m.name : b[sortKey];
-        if (typeof av === 'string') return av.localeCompare(bv) * sortDir;
+        if (typeof av === 'string') return av.localeCompare(bv, window.LOI18n.locale) * sortDir;
         return ((av ?? -Infinity) - (bv ?? -Infinity)) * sortDir;
       });
     }
@@ -115,7 +109,7 @@
         if (c.type === 'model') {
           td.innerHTML = `<span class="model-cell"><span class="swatch" style="background:${r._m.color}"></span>${r._m.name}</span>`;
         } else if (c.type === 'text') {
-          td.textContent = r[c.k];
+          td.textContent = t(r[c.k] === 'Earnings' ? 'results.task.earnings' : 'results.task.0dte');
         } else if (c.type === 'frac') {
           td.className = 'num';
           td.textContent = `${r.assetsPositive}/${r.assets}`;
@@ -135,11 +129,11 @@
       body.appendChild(tr);
     });
 
-    document.getElementById('results-note').textContent = NOTES[current] || '';
+    document.getElementById('results-note').textContent = t(NOTES[current]);
 
     const chartHost = document.getElementById('dist-chart');
-    const t = TASKS.find(x => x.key === current);
-    if (t.kind === 'episode') {
+    const selectedTask = TASKS.find(x => x.key === current);
+    if (selectedTask.kind === 'episode') {
       chartHost.closest('div').style.display = '';
       window.LOCharts.distributionChart(chartHost, data.models, dist, current);
     } else {
@@ -149,9 +143,10 @@
 
   function buildSeg() {
     const seg = document.getElementById('task-seg');
+    seg.innerHTML = '';
     TASKS.forEach(t => {
       const b = document.createElement('button');
-      b.textContent = t.label;
+      b.textContent = window.LOI18n.t(t.labelKey);
       b.className = t.key === current ? 'on' : '';
       b.onclick = () => {
         current = t.key; sortKey = null; sortDir = -1;
@@ -174,8 +169,12 @@
     addEventListener('resize', () => { clearTimeout(t); t = setTimeout(render, 150); });
   }
 
+  window.addEventListener('lo:languagechange', () => {
+    if (data && dist) { buildSeg(); render(); }
+  });
+
   init().catch(e => {
     document.getElementById('results-note').textContent =
-      `Could not load the results data: ${e.message}`;
+      t('results.error', {message: e.message});
   });
 })();

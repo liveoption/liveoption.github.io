@@ -2,18 +2,29 @@
 
 (function () {
   const $ = id => document.getElementById(id);
+  const { t, number, date } = window.LOI18n;
+  const scenarioText = (entry, field) => {
+    const key = `scenario.${entry.id}.${field}`;
+    const translated = t(key);
+    return translated === key ? entry[field] : translated;
+  };
+  const valueLabel = (prefix, value) => {
+    const key = `${prefix}.${String(value).toLowerCase()}`;
+    const translated = t(key);
+    return translated === key ? String(value) : translated;
+  };
   const MODEL_META = {};   // filled from results.json so colours match
 
   const TASKS = [
-    { id: 'earnings', key: 'Earnings', name: 'Earnings bet', tag: 'orange', title: 'Trade an earnings event', description: 'META and NVDA announcement decisions.' },
-    { id: '0dte', key: '0DTE', name: '0DTE intraday', tag: 'gold', title: 'Decide at the market open', description: 'SPY options expiring the same day.' },
-    { id: 'overlay', key: 'Overlay', name: 'Portfolio overlay', tag: '', title: 'Hedge an equity position', description: 'A protective overlay on a QQQ portfolio.' },
+    { id: 'earnings', key: 'Earnings', tag: 'orange' },
+    { id: '0dte', key: '0DTE', tag: 'gold' },
+    { id: 'overlay', key: 'Overlay', tag: '' },
   ];
   let index = [], scenario = null, build = null, task = null, requestId = 0;
 
   async function readJSON(path) {
     const response = await fetch(path);
-    if (!response.ok) throw new Error(`Could not load ${path} (HTTP ${response.status})`);
+    if (!response.ok) throw new Error(t('error.resource', {path, status: response.status}));
     return response.json();
   }
 
@@ -67,29 +78,29 @@
     const resolved = a.resolved || [];
 
     const confText = v.conf === undefined || v.conf === null ? ''
-      : (typeof v.conf === 'number' ? v.conf.toFixed(2) : String(v.conf));
+      : (typeof v.conf === 'number' ? number(v.conf, 2) : valueLabel('answer.confidence', v.conf));
 
     return `<div class="answer">
       <div class="who">
         <span class="swatch" style="background:${colour}"></span>
         ${esc(name)}
         ${a.build ? `<span class="badge">${esc(a.build)}</span>` : ''}
-        ${a.samePrompt === false ? '<span class="badge" title="This model saw a slightly different observation">different prompt</span>' : ''}
+        ${a.samePrompt === false ? `<span class="badge" title="${esc(t('answer.differentHint'))}">${esc(t('answer.different'))}</span>` : ''}
       </div>
       <div style="display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap;margin-bottom:.3rem">
-        ${v.dir ? `<span class="side ${DIR_CLASS(v.dir)}" style="font-family:var(--font-mono);font-weight:700;font-size:.82rem">${esc(String(v.dir).toUpperCase())}</span>` : ''}
-        ${confText ? `<span class="note" style="margin:0">confidence ${esc(confText)}</span>` : ''}
-        ${v.move !== undefined && v.move !== null ? `<span class="note" style="margin:0">expected move ${esc(v.move)}%</span>` : ''}
+        ${v.dir ? `<span class="side ${DIR_CLASS(v.dir)}" style="font-family:var(--font-mono);font-weight:700;font-size:.82rem">${esc(valueLabel('answer.direction', v.dir))}</span>` : ''}
+        ${confText ? `<span class="note" style="margin:0">${esc(t('answer.confidence', {value: confText}))}</span>` : ''}
+        ${v.move !== undefined && v.move !== null ? `<span class="note" style="margin:0">${esc(t('answer.move', {value: v.move}))}</span>` : ''}
       </div>
-      ${v.text ? `<div class="answer-reasoning">${esc(String(v.text))}</div>` : ''}
+      ${v.text ? `<div class="answer-reasoning" lang="en">${esc(String(v.text))}</div>` : ''}
       ${legs.length
-        ? `<div class="legs">${legs.map(legRow).join('')}</div>`
-        : '<div class="no-trade">No legs proposed at this decision.</div>'}
+        ? `<div class="legs" lang="en">${legs.map(legRow).join('')}</div>`
+        : `<div class="no-trade">${esc(t('answer.noLegs'))}</div>`}
       ${resolved.length
-        ? `<details style="margin-top:.5rem"><summary class="note" style="cursor:pointer">Resolved to ${resolved.length} order${resolved.length > 1 ? 's' : ''} by the engine</summary>
-           <div class="legs" style="margin-top:.35rem">${resolved.map(legRow).join('')}</div></details>`
+        ? `<details style="margin-top:.5rem"><summary class="note" style="cursor:pointer">${esc(t('answer.resolved', {count: resolved.length}))}</summary>
+           <div class="legs" lang="en" style="margin-top:.35rem">${resolved.map(legRow).join('')}</div></details>`
         : ''}
-      ${a.raw ? `<details style="margin-top:.5rem"><summary class="note" style="cursor:pointer">Unparsed reply</summary><div class="prompt-box" style="max-height:200px;margin-top:.35rem">${esc(a.raw)}</div></details>` : ''}
+      ${a.raw ? `<details style="margin-top:.5rem"><summary class="note" style="cursor:pointer">${esc(t('answer.raw'))}</summary><div class="prompt-box" lang="en" style="max-height:200px;margin-top:.35rem">${esc(a.raw)}</div></details>` : ''}
     </div>`;
   }
 
@@ -104,7 +115,7 @@
     scenario.groups.forEach(g => {
       const b = document.createElement('button');
       b.type = 'button';
-      b.textContent = g.build === 'release' ? 'Release recordings' : `${g.build} recordings`;
+      b.textContent = g.build === 'release' ? t('demo.release') : t('demo.build', {build: g.build});
       b.setAttribute('aria-pressed', String(g === build));
       b.className = g === build ? 'on' : '';
       b.onclick = () => {
@@ -124,12 +135,12 @@
   function renderMeta() {
     const g = build;
     const bits = [];
-    if (g.day) bits.push(g.day);
-    bits.push(`${g.answers.length} recorded answers`);
+    if (g.day) bits.push(date(g.day));
+    bits.push(t('demo.count', {count: g.answers.length}));
     if (g.promptAgreement && g.promptAgreement !== `${g.answers.length}/${g.answers.length}`) {
-      bits.push(`prompt agreement ${g.promptAgreement}`);
+      bits.push(t('demo.agreement', {value: g.promptAgreement}));
     }
-    bits.push(g.newsHeadlines ? `${g.newsHeadlines} news headlines` : 'no news in the packet');
+    bits.push(g.newsHeadlines ? t('demo.headlines', {count:g.newsHeadlines}) : t('demo.noNews'));
     $('sc-meta').textContent = bits.join(' · ');
   }
 
@@ -141,26 +152,26 @@
     });
     scenario = null;
     build = null;
-    $('sc-title').textContent = 'Loading…';
+    $('sc-title').textContent = t('demo.loadingScenario');
     $('sc-blurb').textContent = '';
-    $('sc-task').textContent = task.name;
+    $('sc-task').textContent = t(`task.${task.id}.name`);
     $('sc-meta').textContent = '';
     $('build-seg').innerHTML = '';
     $('answers').innerHTML = '';
     $('prompt-box').textContent = '';
     $('prompt-box').hidden = true;
-    $('toggle-prompt').textContent = 'Show observation';
+    $('toggle-prompt').textContent = t('demo.showObservation');
     $('toggle-prompt').setAttribute('aria-expanded', 'false');
     $('toggle-prompt').disabled = true;
     $('demo-main').setAttribute('aria-busy', 'true');
     try {
       const loaded = await readJSON(`data/scenarios/${entry.id}.json`);
       if (currentRequest !== requestId) return;
-      if (!loaded.groups?.length) throw new Error('No recorded decisions are available for this scenario.');
+      if (!loaded.groups?.length) throw new Error(t('demo.noDecisions'));
       scenario = loaded;
       build = scenario.groups[0];
-      $('sc-title').textContent = scenario.title;
-      $('sc-blurb').textContent = scenario.blurb;
+      $('sc-title').textContent = scenarioText(scenario, 'title');
+      $('sc-blurb').textContent = scenarioText(scenario, 'blurb');
       $('prompt-box').textContent = build.user;
       renderBuildSeg();
       renderMeta();
@@ -172,7 +183,7 @@
       window.history.replaceState(null, '', url);
     } catch (error) {
       if (currentRequest !== requestId) return;
-      $('sc-title').textContent = 'Demo unavailable';
+      $('sc-title').textContent = t('demo.unavailable');
       $('sc-blurb').textContent = error.message;
     } finally {
       if (currentRequest === requestId) $('demo-main').setAttribute('aria-busy', 'false');
@@ -186,41 +197,72 @@
       b.classList.toggle('on', active);
       b.setAttribute('aria-pressed', String(active));
     });
+    $('demo-status').hidden = true;
+    $('demo-workspace').hidden = false;
+    renderScenarioList(preferredScenario, true);
+  }
+
+  function renderScenarioList(preferredScenario, load) {
     const entries = index.filter(e => e.task === task.key);
     const host = $('scenario-list');
     host.innerHTML = '';
-    $('demo-status').hidden = true;
-    $('demo-workspace').hidden = false;
     entries.forEach(e => {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'scenario';
-      b.innerHTML = `<div class="t">${esc(e.title)}</div><div class="s">${esc(e.ticker)}</div>`;
+      b.classList.toggle('on', e.id === preferredScenario);
+      b.setAttribute('aria-pressed', String(e.id === preferredScenario));
+      b.innerHTML = `<div class="t">${esc(scenarioText(e, 'title'))}</div><div class="s">${esc(e.ticker)}</div>`;
       b.onclick = () => selectScenario(e, b);
       b.dataset.scenario = e.id;
       host.appendChild(b);
     });
-    const first = [...host.children].find(b => b.dataset.scenario === preferredScenario) || host.firstChild;
-    if (first) first.click();
+    if (load) {
+      const first = [...host.children].find(b => b.dataset.scenario === preferredScenario) || host.firstChild;
+      if (first) first.click();
+    }
   }
 
-  function buildTaskList() {
+  function renderTaskButtons() {
     const host = $('demo-tasks');
-    TASKS.filter(t => index.some(e => e.task === t.key)).forEach(t => {
+    host.innerHTML = '';
+    TASKS.filter(candidate => index.some(e => e.task === candidate.key)).forEach(candidate => {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'card demo-task';
-      b.dataset.task = t.id;
-      b.setAttribute('aria-pressed', 'false');
-      b.innerHTML = `<span class="tag ${t.tag}">${esc(t.name)}</span><h3>${esc(t.title)}</h3><p>${esc(t.description)}</p><span class="demo-link">Browse scenarios <span aria-hidden="true">→</span></span>`;
-      b.onclick = () => selectTask(t);
+      b.dataset.task = candidate.id;
+      b.classList.toggle('on', task?.id === candidate.id);
+      b.setAttribute('aria-pressed', String(task?.id === candidate.id));
+      b.innerHTML = `<span class="tag ${candidate.tag}">${esc(t(`task.${candidate.id}.name`))}</span><h3>${esc(t(`task.${candidate.id}.title`))}</h3><p>${esc(t(`task.${candidate.id}.description`))}</p><span class="demo-link">${esc(t('demo.browse'))} <span aria-hidden="true">→</span></span>`;
+      b.onclick = () => selectTask(candidate);
       host.appendChild(b);
     });
-    $('demo-status').textContent = 'Select a task above to browse its recorded scenarios.';
+  }
+
+  function buildTaskList() {
+    renderTaskButtons();
+    $('demo-status').textContent = t('demo.selectFirst');
     const params = new URLSearchParams(window.location.search);
-    const requestedTask = TASKS.find(t => t.id === params.get('task'));
+    const requestedTask = TASKS.find(candidate => candidate.id === params.get('task'));
     if (requestedTask) selectTask(requestedTask, params.get('scenario'));
   }
+
+  window.addEventListener('lo:languagechange', () => {
+    if (!index.length) return;
+    renderTaskButtons();
+    if (!task) { $('demo-status').textContent = t('demo.selectFirst'); return; }
+    renderScenarioList(scenario?.id, false);
+    $('sc-task').textContent = t(`task.${task.id}.name`);
+    const expanded = !$('prompt-box').hidden;
+    $('toggle-prompt').textContent = t(expanded ? 'demo.hideObservation' : 'demo.showObservation');
+    if (scenario && build) {
+      $('sc-title').textContent = scenarioText(scenario, 'title');
+      $('sc-blurb').textContent = scenarioText(scenario, 'blurb');
+      renderBuildSeg();
+      renderMeta();
+      renderAnswers();
+    }
+  });
 
   async function init() {
     const [results, scenarios] = await Promise.all([readJSON('data/results.json'), readJSON('data/scenarios/index.json')]);
@@ -231,12 +273,12 @@
     $('toggle-prompt').onclick = () => {
       const box = $('prompt-box');
       box.hidden = !box.hidden;
-      $('toggle-prompt').textContent = box.hidden ? 'Show observation' : 'Hide observation';
+      $('toggle-prompt').textContent = t(box.hidden ? 'demo.showObservation' : 'demo.hideObservation');
       $('toggle-prompt').setAttribute('aria-expanded', String(!box.hidden));
     };
   }
 
   init().catch(e => {
-    $('demo-status').textContent = `Could not load the demos: ${e.message}`;
+    $('demo-status').textContent = t('demo.loadError', {message: e.message});
   });
 })();

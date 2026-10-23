@@ -24,3 +24,22 @@ In Settings → Pages, select **Deploy from a branch**, **main**, **/ (root)**.
 The site will be available at https://liveoption.github.io/.
 
 Edit the static files and push to main to update the website.
+
+## Languages and future features
+
+Both pages support English (`en`), Simplified Chinese (`cn`), and Japanese (`jp`).
+The navigation selector remembers the choice; `?lang=cn` or `?lang=jp` shares a
+specific language and works alongside demo task/scenario parameters. The initial
+language follows an explicit URL, then a saved preference, then the browser.
+
+`js/locales.js` holds the three matching message dictionaries. `js/i18n.js`
+provides `LOI18n.t`, `number`, `date`, `apply`, and `setLanguage`.
+Use semantic keys with `data-i18n` in HTML, and rerender dynamic interface labels
+on `lo:languagechange`. See `AGENTS.md` for the requirements for future work.
+
+Benchmark inputs, model replies, order identifiers, model names, citations and
+paper figures remain in their original language, with explanatory labels.
+
+```sh
+node scripts/check-i18n.mjs
+```

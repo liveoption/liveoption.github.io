@@ -49,7 +49,7 @@ function distributionChart(host, models, series, task) {
 
   const svg = el('svg', {
     class: 'chart', viewBox: `0 0 ${W} ${H}`, width: '100%', height: H,
-    role: 'img', 'aria-label': `Episode return distribution by model for ${task}`,
+    role: 'img', 'aria-label': window.LOI18n.t('chart.label', {task: window.LOI18n.t(task === 'Earnings' ? 'results.task.earnings' : 'results.task.0dte')}),
   });
 
   // axis
@@ -102,14 +102,14 @@ function distributionChart(host, models, series, task) {
       svg.appendChild(el('text', {
         x: W - padR, y: y + 4, 'text-anchor': 'end',
         'font-size': 10, fill: '#8994A8',
-      }, `${clipped} beyond axis`));
+      }, window.LOI18n.t('chart.beyond', {count: clipped})));
     }
   });
 
   svg.appendChild(el('text', {
     x: padL + (W - padL - padR) / 2, y: H - 8, 'text-anchor': 'middle',
     'font-size': 11, fill: '#8994A8',
-  }, 'Episode return (%)'));
+  }, window.LOI18n.t('chart.axis')));
 
   host.appendChild(svg);
 }
