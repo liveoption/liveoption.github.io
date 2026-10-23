@@ -3,7 +3,7 @@
 Static project website with benchmark results, figures, and recorded model demos.
 No API key or backend is needed.
 
-- `index.html`: project overview with task demo links and collapsible results.
+- `index.html`: project overview, scenario guide dialogs with original SVG illustrations, and collapsible results.
 - `demos.html`: recorded demos, selected by task, scenario and build.
 - Both pages use the invisible Statcounter project `13361926`.
 
@@ -43,3 +43,6 @@ paper figures remain in their original language, with explanatory labels.
 ```sh
 node scripts/check-i18n.mjs
 ```
+
+Scenario guides are implemented in `js/scenes.js`. Their original SVG diagrams
+are conceptual illustrations; all captions and guide text are localized.

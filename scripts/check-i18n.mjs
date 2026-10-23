@@ -26,7 +26,7 @@ for (const filename of ['index.html', 'demos.html']) {
   assert.ok(html.includes('data-language-select'), `${filename}: missing language selector`);
   assert.equal(html.split('sc_project=13361926').length, 2, `${filename}: analytics count`);
 }
-for (const filename of ['js/playground.js', 'js/results.js', 'js/charts.js']) {
+for (const filename of ['js/playground.js', 'js/results.js', 'js/charts.js', 'js/scenes.js']) {
   const code = read(filename);
   for (const [, key] of code.matchAll(/(?:\bt|labelKey):?\(?\s*'([\w.-]+)'/g)) {
     assert.ok(locales.en[key], `${filename}: unknown translation ${key}`);
@@ -35,5 +35,11 @@ for (const filename of ['js/playground.js', 'js/results.js', 'js/charts.js']) {
 const scenarios = JSON.parse(read('data/scenarios/index.json'));
 for (const scenario of scenarios) {
   for (const field of ['title', 'blurb']) assert.ok(locales.en[`scenario.${scenario.id}.${field}`]);
+  assert.ok(locales.en[`scenes.case.${scenario.id}`], `Missing case guide: ${scenario.id}`);
+}
+for (const task of ['earnings', '0dte', 'overlay']) {
+  for (const field of ['preview', 'goal', 'observe', 'decide', 'challenge', 'figure', 'caption']) {
+    assert.ok(locales.en[`scenes.${task}.${field}`], `Missing scenario guide: ${task}.${field}`);
+  }
 }
 console.log(`PASS: ${keys.length} keys × 3 languages, matching placeholders, HTML references, scenario copy and analytics.`);

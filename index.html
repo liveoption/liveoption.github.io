@@ -8,9 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="js/locales.js?v=3"></script>
+<script src="js/locales.js?v=4"></script>
 <script src="js/i18n.js?v=3"></script>
-<link rel="stylesheet" href="css/style.css?v=3">
+<link rel="stylesheet" href="css/style.css?v=4">
 </head>
 <body>
 
@@ -23,7 +23,7 @@
     <div class="nav-links">
       <a href="#overview"><span data-i18n="nav.overview">Overview</span></a>
       <a href="#tasks"><span data-i18n="nav.tasks">Tasks</span></a>
-      <a href="#demos"><span data-i18n="nav.demos">Demos</span></a>
+      <a href="#demos"><span data-i18n="scenes.nav">Scenarios</span></a>
       <a href="#cite"><span data-i18n="nav.citation">Citation</span></a>
     </div>
     <div class="nav-actions">
@@ -59,33 +59,47 @@
 <section id="demos">
   <div class="container">
     <div class="sec-head">
-      <div class="eyebrow"><span data-i18n="demos.eyebrow">Recorded demos</span></div>
-      <h2><span data-i18n="home.demoTitle">See the agents in action</span></h2>
-      <p><span data-i18n="home.demoIntro">Explore the observations, reasoning and option orders from our recorded runs. Choose a task to open its demos.</span></p>
+      <div class="eyebrow"><span data-i18n="scenes.eyebrow">Scenario guide</span></div>
+      <h2><span data-i18n="scenes.title">Understand the trading scenarios</span></h2>
+      <p><span data-i18n="scenes.intro">Open a scenario guide to explore its objective, decision process and recorded cases.</span></p>
     </div>
-    <div class="cards demo-previews">
-      <a class="card demo-preview" href="demos.html?task=earnings" target="_blank" rel="noopener">
+    <div class="cards scenario-previews">
+      <button class="card scenario-card" type="button" data-scene="earnings" aria-haspopup="dialog" aria-controls="scenario-guide">
         <span class="tag orange"><span data-i18n="task.earnings.name">Earnings bet</span></span>
-        <h3><span data-i18n="task.earnings.title">Trade an earnings event</span></h3>
-        <p><span data-i18n="task.earnings.preview">Compare decisions around the META and NVDA announcements, including proposed spreads and resolved orders.</span></p>
-        <span class="demo-link"><span data-i18n="task.earnings.link">Explore earnings demos</span> <span aria-hidden="true">↗</span></span>
-      </a>
-      <a class="card demo-preview" href="demos.html?task=0dte" target="_blank" rel="noopener">
+        <span class="scenario-card-title" data-i18n="task.earnings.title">Trade an earnings event</span>
+        <span class="scenario-card-body" data-i18n="scenes.earnings.preview">Position around a scheduled announcement while balancing direction, option premium and volatility risk.</span>
+        <span class="demo-link"><span data-i18n="scenes.learn">About this scenario</span> <span aria-hidden="true">＋</span></span>
+      </button>
+      <button class="card scenario-card" type="button" data-scene="0dte" aria-haspopup="dialog" aria-controls="scenario-guide">
         <span class="tag gold"><span data-i18n="task.0dte.name">0DTE intraday</span></span>
-        <h3><span data-i18n="task.0dte.title">Decide at the market open</span></h3>
-        <p><span data-i18n="task.0dte.preview">Inspect the opening decisions from two SPY sessions with same-day expiry options.</span></p>
-        <span class="demo-link"><span data-i18n="task.0dte.link">Explore 0DTE demos</span> <span aria-hidden="true">↗</span></span>
-      </a>
-      <a class="card demo-preview" href="demos.html?task=overlay" target="_blank" rel="noopener">
-        <span class="tag"><span data-i18n="task.overlay.name">Portfolio overlay</span></span>
-        <h3><span data-i18n="task.overlay.title">Hedge an equity position</span></h3>
-        <p><span data-i18n="task.overlay.preview">See how agents propose protective option positions for an existing QQQ portfolio.</span></p>
-        <span class="demo-link"><span data-i18n="task.overlay.link">Explore overlay demo</span> <span aria-hidden="true">↗</span></span>
-      </a>
+        <span class="scenario-card-title" data-i18n="task.0dte.title">Decide at the market open</span>
+        <span class="scenario-card-body" data-i18n="scenes.0dte.preview">Make intraday decisions in SPY options whose remaining life ends on the same trading day.</span>
+        <span class="demo-link"><span data-i18n="scenes.learn">About this scenario</span> <span aria-hidden="true">＋</span></span>
+      </button>
+      <button class="card scenario-card" type="button" data-scene="overlay" aria-haspopup="dialog" aria-controls="scenario-guide">
+        <span class="tag "><span data-i18n="task.overlay.name">Portfolio overlay</span></span>
+        <span class="scenario-card-title" data-i18n="task.overlay.title">Hedge an equity position</span>
+        <span class="scenario-card-body" data-i18n="scenes.overlay.preview">Add an option layer to an existing stock portfolio, balancing protection, option cost and participation in market gains.</span>
+        <span class="demo-link"><span data-i18n="scenes.learn">About this scenario</span> <span aria-hidden="true">＋</span></span>
+      </button>
     </div>
   </div>
 </section>
 
+<dialog class="scene-dialog" id="scenario-guide" aria-labelledby="scene-title">
+  <div class="scene-shell">
+    <header class="scene-header">
+      <div><span class="eyebrow" id="scene-tag"></span><h2 id="scene-title"></h2></div>
+      <div class="scene-header-actions">
+        <select class="language-select" data-language-select aria-label="Language" data-i18n-aria-label="nav.language">
+          <option value="en" lang="en">EN</option><option value="cn" lang="zh-CN">中文</option><option value="jp" lang="ja">日本語</option>
+        </select>
+        <button class="scene-close" type="button" data-close-scene aria-label="Close scenario guide" data-i18n-aria-label="scenes.close" autofocus>×</button>
+      </div>
+    </header>
+    <div class="scene-content" id="scene-content"></div>
+  </div>
+</dialog>
 
 <section id="overview">
   <div class="container narrow">
@@ -221,6 +235,7 @@
   </div>
 </footer>
 
+<script src="js/scenes.js?v=4"></script>
 <script src="js/charts.js?v=3"></script>
 <script src="js/results.js?v=3"></script>
 <!-- Default Statcounter code for LO https://liveoption.github.io/ -->
