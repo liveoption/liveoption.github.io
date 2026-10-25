@@ -638,11 +638,14 @@ window.LO_LOCALES = {
 // Recorded replay explorer: keep source artifacts original, translate UI only.
 {
   const messages = {
+    'demo.referenceNote': ['Reference observation associated with this model’s recording. Opening inputs may differ between models; marked answers differ from the first model’s reference. Original text is preserved.', '该模型记录对应的参考观察。各模型首次输入可能不同；标记表示与首个模型的参考输入存在差异。以下保留原文。', 'このモデルの記録に対応する参考観測です。最初の入力はモデル間で異なる場合があり、印は先頭モデルの参考入力との差を示します。原文を保持します。'],
+    'demo.inputNote': ['All models · input differences marked', '全部模型 · 输入差异已标记', '全モデル・入力の差異を表示'],
+    'results.caveat': ['Six models used one hosted provider; GPT-5.6-Terra and Gemini-3-Flash used a separate gateway. Their earnings observations contain no news headlines, unlike the other six models. All models appear together in the demos, with input differences marked.', '六个模型通过同一托管提供方访问；GPT-5.6-Terra 和 Gemini-3-Flash 使用独立网关。后两者在财报观察中没有新闻标题，与其余六个模型的输入存在差异。演示中统一展示所有模型，并标记输入差异。', '6モデルは同一の提供元を利用し、GPT-5.6-TerraとGemini-3-Flashは別のゲートウェイを利用しました。後者の決算観測にはニュース見出しが含まれず、ほかの6モデルと入力が異なります。デモでは全モデルを一緒に表示し、入力の差異を示します。'],
     'replay.complete': ['Recorded finish: exit 0', '已记录结束：退出码 0', '終了記録あり：終了コード0'],
     'replay.failed': ['Recorded finish: exit {code}. This is a partial run; statistics cover the saved window only.', '归档退出码为 {code}。这是未正常完成的运行，统计仅覆盖已保存时段。', '記録された終了コード：{code}。未完了の実行であり、統計は保存期間のみです。'],
     'replay.partial': ['Partial or unverified completion; statistics cover exported observations only.', '结束状态未确认或运行不完整；统计仅覆盖已导出的观察。', '完了未確認または一部の実行です。統計は出力済みの観測範囲のみです。'],
     'demo.intro': ['Choose a task and scenario. Explore real price candles, recorded decisions, account paths and results, or compare the original opening answers.', '选择任务与场景，浏览真实 K 线、决策记录、账户曲线及统计，也可对比原始首次回答。', 'タスクと事例を選び、実際のローソク足、記録済みの判断、口座推移、統計、最初の回答の比較を確認します。'],
-    'demo.aboutBody': ['Opening answers can be compared within a matching prompt group. Replay records belong to each model’s own run and later portfolio; they are not answers to a shared observation. Missing records are never synthesized.', '首次回答可在相同 Prompt 组内比较。回放中的后续记录属于各模型自己的运行和持仓，并非对同一观察的回答。缺失记录不会用生成数据填补。', '最初の回答は同一プロンプト群内で比較できます。以後の記録は各モデル固有の実行・保有状況に属し、共通の観測への回答ではありません。欠損記録を生成データで補いません。'],
+    'demo.aboutBody': ['All recorded models appear together. Opening inputs may differ in news or portfolio state; differences from the first model’s reference input are marked. Later observations belong to each model’s own portfolio. Missing records are never synthesized.', '所有模型统一展示。首次输入可能因新闻或持仓状态而不同，与首个模型参考输入的差异已标记。后续观察属于各模型自己的持仓。缺失记录不会用生成数据填补。', '記録済みの全モデルを一緒に表示します。最初の入力はニュースや保有状況によって異なり、先頭モデルの参考入力との差を示します。以後の観測は各モデル固有の保有に属します。欠損記録を生成データで補いません。'],
     'replay.views': ['Demo views', '演示视图', 'デモ表示'],
     'replay.opening': ['Opening comparison', '首次决策对比', '最初の判断を比較'],
     'replay.market': ['Candles & checkpoints', 'K 线与检查点', 'ローソク足とチェックポイント'],
@@ -653,7 +656,7 @@ window.LO_LOCALES = {
     'replay.unavailable': ['This replay is unavailable. The original opening comparison remains available.', '此运行回放暂不可用，仍可查看原始首次决策对比。', 'この回放は利用できません。最初の判断比較は引き続き確認できます。'],
     'replay.retry': ['Retry', '重试', '再試行'],
     'replay.source': ['Recorded run · original responses · QFinZero historical prices · no live inference or orders', '真实归档运行 · 原始回答 · QFinZero 历史价格 · 不调用模型、不下新订单', '実行アーカイブ・原文の回答・QFinZero履歴価格・新たな推論や発注なし'],
-    'replay.scope': ['One model, one build, one case. Later observations include that model’s own portfolio. Proposals, risk checks and fills are separate records.', '一个模型、一个构建版本、一个案例。后续观察包含该模型自己的持仓。提议、风控与成交分别记录。', '1モデル・1ビルド・1事例。後の観測にはそのモデル固有の保有が含まれます。提案・リスク確認・約定は別の記録です。'],
+    'replay.scope': ['One model, one case. Later observations include that model’s own portfolio. Proposals, risk checks and fills are separate records.', '一个模型、一个案例。后续观察包含该模型自己的持仓。提议、风控与成交分别记录。', '1モデル・1事例。後の観測にはそのモデル固有の保有が含まれます。提案・リスク確認・約定は別の記録です。'],
     'replay.download': ['Download recorded run JSON', '下载运行记录 JSON', '実行記録JSONを保存'],
     'replay.return': ['Account return', '账户收益率', '口座リターン'],
     'replay.drawdown': ['Daily snapshot drawdown', '每日快照回撤', '日次スナップショットのドローダウン'],
@@ -707,7 +710,7 @@ window.LO_LOCALES = {
     'replay.activityNote': ['Counts decisions with or without a proposed order, not wins and losses. Forced exits and later fills may occur without a new model call.', '统计是否提出订单的决策次数，不代表交易胜负。强制平仓或后续成交可能不对应新的模型调用。', '注文提案の有無による判断件数であり、勝敗ではありません。強制決済や後の約定は新たなモデル呼び出しがなくても発生します。'],
     'replay.distribution': ['Daily P&L by date', '每日盈亏走势', '日付別の損益推移'],
     'replay.distributionNote': ['One bar per recorded day; zero days remain visible. This is one selected case, not the whole benchmark panel.', '每柱为一个记录日，零盈亏日保留。这里只统计当前选中案例，不代表整个评测面板。', '各棒は1記録日を表し、損益ゼロの日も保持します。選択事例のみであり、ベンチマーク全体ではありません。'],
-    'replay.period': ['{start} → {end} · {days} recorded days · {build}', '{start} → {end} · {days} 个记录日 · {build}', '{start} → {end}・{days}記録日・{build}'],
+    'replay.period': ['{start} → {end} · {days} recorded days', '{start} → {end} · {days} 个记录日', '{start} → {end}・{days}記録日'],
     'replay.fullStats': ['Explore panel-wide benchmark statistics →', '查看整个评测面板的统计 →', 'ベンチマーク全体の統計を見る →'],
     'replay.dataError': ['Archived data could not be loaded ({status}).', '归档数据加载失败（{status}）。', '保存データを読み込めません（{status}）。'],
     'replay.priceSource': ['Source: {source} · {resolution} · {count} exported bars', '来源：{source} · {resolution} · {count} 根导出 K 线', '出典：{source}・{resolution}・{count}本の価格データ'],

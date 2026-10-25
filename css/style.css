@@ -363,6 +363,9 @@ footer .container { display: flex; justify-content: space-between; gap: var(--sp
 .scenario-header > p { font-size: .9rem; }
 .scenario-header .controls { margin: 1rem 0 0; }
 .scenario-header .prompt-box { margin-top: 1rem; }
+.scenario-header .prompt-box label { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; font: .8rem var(--font-body); }
+.scenario-header .prompt-box select { max-width: 100%; min-width: 0; padding: .5rem; }
+.scenario-header .prompt-box pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 1rem 0 0; font: inherit; }
 .scenario-header #sc-meta { font-size: .75rem; margin-top: 1rem; }
 .answers-heading { font-size: 1.15rem; }
 .answers-intro { margin: -.25rem 0 1.25rem; }

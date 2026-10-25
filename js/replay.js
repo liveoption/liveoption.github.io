@@ -22,7 +22,7 @@
     const url = new URL(location.href);
     url.searchParams.set('view', view);
     if (model) url.searchParams.set('model', model);
-    if (recording) url.searchParams.set('build', recording.build.build);
+    url.searchParams.delete('build');
     history.replaceState(null, '', url);
   }
   async function read(path) {
@@ -39,8 +39,9 @@
     loading = true; failed = false; run = null; prices = null;
     selected = page = ledgerPage = 0; dayFilter = ''; filter = 'all'; rawOpen = false;
     render(); urlState();
+    window.dispatchEvent(new CustomEvent('lo:modelselected', {detail:{model}}));
     try {
-      const scenario = recording.scenario.id, build = recording.build.build;
+      const scenario = recording.scenario.id, build = recording.answers.find(answer => answer.model === model).group.build;
       const data = await Promise.all([
         read(`data/replays/${encodeURIComponent(scenario)}/${encodeURIComponent(build)}/${encodeURIComponent(model)}.json`),
         read(`data/market/${encodeURIComponent(scenario)}.json`),
@@ -71,7 +72,7 @@
   function render() {
     if (!recording) return;
     renderTabs();
-    const models = recording.build.answers.map(answer => answer.model);
+    const models = recording.answers.map(answer => answer.model);
     const toolbar = `<div class="replay-toolbar"><label>${esc(t('replay.model'))}<select id="replay-model">${models.map(id => `<option value="${esc(id)}" ${id === model ? 'selected' : ''}>${esc(recording.models[id]?.name || id)}</option>`).join('')}</select></label><button class="btn btn-sm" type="button" id="replay-download" ${!run ? 'disabled' : ''}>${esc(t('replay.download'))}</button></div>`;
     if (loading || failed || !run) {
       host.innerHTML = `<section class="panel">${toolbar}<p class="note" role="status">${esc(t(failed ? 'replay.unavailable' : 'replay.loading'))}</p>${failed ? `<button class="btn btn-sm" type="button" id="replay-retry">${esc(t('replay.retry'))}</button>` : ''}</section>`;
@@ -81,10 +82,9 @@
     const completed = run.completion?.recorded_finish && run.completion.exit_code === 0;
     const intro = `<section class="panel">${toolbar}
       <p class="replay-source">${esc(t('replay.source'))}</p>
-      <p class="note">${esc(t('replay.period', {start:date(run.daily[0].day), end:date(run.daily.at(-1).day), days:number(run.daily.length), build:run.build}))}</p>
+      <p class="note">${esc(t('replay.period', {start:date(run.daily[0].day), end:date(run.daily.at(-1).day), days:number(run.daily.length)}))}</p>
       <p class="note ${completed ? '' : 'replay-status-partial'}">${esc(t(completed ? 'replay.complete' : run.completion?.exit_code != null ? 'replay.failed' : 'replay.partial', {code:run.completion?.exit_code}))}</p>
       <p class="note">${esc(t('replay.scope'))}</p>
-      ${run.opening_prompt_matches_group ? '' : `<p class="note original-note">${esc(t('answer.differentHint'))}</p>`}
     </section>`;
     const kpis = `<div class="replay-kpis">${card('replay.return', percent(summary.return))}${card('replay.drawdown', percent(-summary.max_daily_drawdown))}${card('replay.decisions', number(summary.decision_count))}${card('replay.fills', number(summary.fill_count))}</div>`;
     let content = '';
@@ -224,16 +224,17 @@
       if (!run) return;
       const report = {background:{scenario:run.scenario, model:run.model, build:run.build, source:run.source}, settings:{baseline:run.baseline, time_zone:run.time_zone, currency:run.currency, scope:t('replay.scope')}, results:run};
       const url = URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));
-      const link = document.createElement('a'); link.href = url; link.download = `${run.scenario}-${run.build}-${run.model}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(url),1000);
+      const link = document.createElement('a'); link.href = url; link.download = `${run.scenario}-${run.model}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(url),1000);
     });
     window.LOI18n.apply(host);
   }
 
   function recordingChange(detail) {
     recording = detail;
-    if (!recording.build.answers.some(answer => answer.model === model)) model = recording.build.answers[0]?.model;
+    if (!recording.answers.some(answer => answer.model === model)) model = recording.answers[0]?.model;
     if (model) load();
   }
+  window.addEventListener('lo:selectmodel', event => {model = event.detail.model; load();});
   window.addEventListener('lo:recordingchange', event => recordingChange(event.detail));
   window.addEventListener('lo:recordingloading', () => {generation++; recording = null; host.hidden = tabs.hidden = true; opening.hidden = false;});
   window.addEventListener('lo:languagechange', render);

@@ -20,7 +20,13 @@
     { id: '0dte', key: '0DTE', tag: 'gold' },
     { id: 'overlay', key: 'Overlay', tag: '' },
   ];
-  let index = [], scenario = null, build = null, task = null, requestId = 0;
+  let index = [], scenario = null, task = null, selectedModel = null, requestId = 0;
+  const answers = () => scenario ? scenario.groups.flatMap(group => group.answers.map(answer => ({...answer, group}))) : [];
+  const observationGroup = () => answers().find(answer => answer.model === selectedModel)?.group || scenario?.groups[0];
+  function publishRecording() {
+    window.LORecording = {scenario, answers:answers(), models:MODEL_META};
+    window.dispatchEvent(new CustomEvent('lo:recordingchange', {detail:window.LORecording}));
+  }
 
   async function readJSON(path) {
     const response = await fetch(path);
@@ -84,7 +90,6 @@
       <div class="who">
         <span class="swatch" style="background:${colour}"></span>
         ${esc(name)}
-        ${a.build ? `<span class="badge">${esc(a.build)}</span>` : ''}
         ${a.samePrompt === false ? `<span class="badge" title="${esc(t('answer.differentHint'))}">${esc(t('answer.different'))}</span>` : ''}
       </div>
       <div style="display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap;margin-bottom:.3rem">
@@ -105,44 +110,28 @@
   }
 
   function renderAnswers() {
-    $('answers').innerHTML = !scenario || !build ? ''
-      : build.answers.map(a => answerCard({ ...a, build: build.build })).join('');
+    const reference = scenario?.groups[0]?.promptSha;
+    $('answers').innerHTML = answers().map(answer => answerCard({...answer, samePrompt:answer.samePrompt && answer.group.promptSha === reference})).join('');
   }
 
-  function renderBuildSeg() {
-    const seg = $('build-seg');
-    seg.innerHTML = '';
-    scenario.groups.forEach(g => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.textContent = g.build === 'release' ? t('demo.release') : t('demo.build', {build: g.build});
-      b.setAttribute('aria-pressed', String(g === build));
-      b.className = g === build ? 'on' : '';
-      b.onclick = () => {
-        build = g;
-        [...seg.children].forEach(c => {
-          c.classList.toggle('on', c === b);
-          c.setAttribute('aria-pressed', String(c === b));
-        });
-        $('prompt-box').textContent = g.user;
-        renderAnswers();
-        renderMeta();
-        window.LORecording = {scenario, build, models: MODEL_META};
-        window.dispatchEvent(new CustomEvent('lo:recordingchange', {detail: window.LORecording}));
-      };
-      seg.appendChild(b);
-    });
+  function renderObservation() {
+    const group = observationGroup();
+    if (!group) return;
+    $('prompt-box').innerHTML = `<label>${esc(t('replay.model'))} <select id="observation-model">${answers().map(answer => `<option value="${esc(answer.model)}" ${answer.model === selectedModel ? 'selected' : ''}>${esc(MODEL_META[answer.model]?.name || answer.model)}</option>`).join('')}</select></label><p class="note">${esc(t('demo.referenceNote'))}</p><pre lang="en"></pre>`;
+    $('prompt-box').querySelector('pre').textContent = group.user;
+    $('observation-model').onchange = event => {
+      selectedModel = event.target.value;
+      renderObservation();
+      window.dispatchEvent(new CustomEvent('lo:selectmodel', {detail:{model:selectedModel}}));
+    };
   }
 
   function renderMeta() {
-    const g = build;
+    const g = scenario.groups[0];
     const bits = [];
     if (g.day) bits.push(date(g.day));
-    bits.push(t('demo.count', {count: g.answers.length}));
-    if (g.promptAgreement && g.promptAgreement !== `${g.answers.length}/${g.answers.length}`) {
-      bits.push(t('demo.agreement', {value: g.promptAgreement}));
-    }
-    bits.push(g.newsHeadlines ? t('demo.headlines', {count:g.newsHeadlines}) : t('demo.noNews'));
+    bits.push(t('demo.count', {count: answers().length}));
+    bits.push(t('demo.inputNote'));
     $('sc-meta').textContent = bits.join(' · ');
   }
 
@@ -153,12 +142,10 @@
       c.setAttribute('aria-pressed', String(c === btn));
     });
     scenario = null;
-    build = null;
     $('sc-title').textContent = t('demo.loadingScenario');
     $('sc-blurb').textContent = '';
     $('sc-task').textContent = t(`task.${task.id}.name`);
     $('sc-meta').textContent = '';
-    $('build-seg').innerHTML = '';
     $('answers').innerHTML = '';
     $('prompt-box').textContent = '';
     $('prompt-box').hidden = true;
@@ -173,17 +160,15 @@
       if (currentRequest !== requestId) return;
       if (!loaded.groups?.length) throw new Error(t('demo.noDecisions'));
       scenario = loaded;
-      const requestedBuild = new URLSearchParams(location.search).get('build');
-      build = scenario.groups.find(group => group.build === requestedBuild) || scenario.groups[0];
+      const requestedModel = new URLSearchParams(location.search).get('model') || selectedModel;
+      selectedModel = answers().some(answer => answer.model === requestedModel) ? requestedModel : answers()[0].model;
       $('sc-title').textContent = scenarioText(scenario, 'title');
       $('sc-blurb').textContent = scenarioText(scenario, 'blurb');
-      $('prompt-box').textContent = build.user;
-      renderBuildSeg();
+      renderObservation();
       renderMeta();
       renderAnswers();
       $('toggle-prompt').disabled = false;
-      window.LORecording = {scenario, build, models: MODEL_META};
-      window.dispatchEvent(new CustomEvent('lo:recordingchange', {detail: window.LORecording}));
+      publishRecording();
       const url = new URL(window.location.href);
       url.searchParams.set('task', task.id);
       url.searchParams.set('scenario', entry.id);
@@ -262,13 +247,17 @@
     $('sc-task').textContent = t(`task.${task.id}.name`);
     const expanded = !$('prompt-box').hidden;
     $('toggle-prompt').textContent = t(expanded ? 'demo.hideObservation' : 'demo.showObservation');
-    if (scenario && build) {
+    if (scenario) {
       $('sc-title').textContent = scenarioText(scenario, 'title');
       $('sc-blurb').textContent = scenarioText(scenario, 'blurb');
-      renderBuildSeg();
+      renderObservation();
       renderMeta();
       renderAnswers();
     }
+  });
+  window.addEventListener('lo:modelselected', event => {
+    selectedModel = event.detail.model;
+    renderObservation();
   });
 
   async function init() {
