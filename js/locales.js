@@ -635,6 +635,64 @@ window.LO_LOCALES = {
   }
 };
 
+// Homepage figures and the QFinZero infrastructure section.
+{
+  const messages = {
+    'viz.nav': ['Figures', '图表', '図表'],
+    'viz.eyebrow': ['Interactive findings', '交互图表', 'インタラクティブな結果'],
+    'viz.title': ['Look beyond a single return', '从收益、风险到交易结构', '収益・リスク・取引構造を見る'],
+    'viz.intro': ['Explore eight models through uncertainty, risk and the positions they constructed. These figures use the same exported benchmark results as the tables below.', '从不确定性、风险和持仓结构观察八个模型。图表与下方表格使用同一份评测结果。', '不確実性・リスク・構築したポジションを通じて8モデルを比較します。以下の表と同じ評価データを使用しています。'],
+    'viz.loading': ['Loading benchmark figures…', '正在加载评测图表…', '評価図表を読み込み中…'],
+    'viz.error': ['Figures are temporarily unavailable. Recorded demos and the detailed results remain available below.', '图表暂时无法加载，可继续查看历史演示与详细结果。', '図表を読み込めません。記録済みデモと詳細結果は引き続き確認できます。'],
+    'viz.highlight': ['Highlight a model', '高亮模型', 'モデルを強調'],
+    'viz.interact': ['Select a model or click a chart mark to follow it across all three figures.', '选择模型或点击图中节点，可在三张图中同时高亮。', 'モデルを選ぶか図のマークをクリックすると、3つの図で同時に強調されます。'],
+    'viz.scrollHint': ['Swipe charts horizontally to see the full axes and all values.', '图表可横向滑动，查看完整坐标轴与数值。', '図を横にスワイプすると、軸と数値の全体を確認できます。'],
+    'viz.returnTitle': ['Return and uncertainty', '收益与不确定性', '収益と不確実性'],
+    'viz.returnNote': ['Circle: mean episode return. Diamond: median. Line: 95% bootstrap confidence interval for the mean. The vertical reference is zero.', '圆点：单次任务收益均值；菱形：中位数；横线：均值的 95% Bootstrap 置信区间。竖向参考线为零收益。', '丸はエピソード収益の平均、ひし形は中央値、線は平均の95%ブートストラップ信頼区間です。縦の基準線は収益ゼロを示します。'],
+    'viz.intervalValue': ['Mean {mean}% · 95% CI [{lo}, {hi}]% · median {median}% · {n} episodes', '均值 {mean}% · 95% CI [{lo}, {hi}]% · 中位数 {median}% · {n} 次任务', '平均 {mean}%・95% CI [{lo}, {hi}]%・中央値 {median}%・{n}エピソード'],
+    'viz.tradeoffTitle': ['Overlay return–risk trade-off', '覆盖策略的收益与风险权衡', 'オーバーレイの収益とリスク'],
+    'viz.mandate': ['Mandate', '策略类型', '運用方針'],
+    'viz.tradeoffNote': ['Each point averages five assets. Right: more active return versus holding the stock. Up: greater drawdown reduction. Both axes use percentage points (pp).', '每个点为五个标的的平均值。向右表示相对持有股票的超额收益更高；向上表示回撤改善更多。两轴单位均为百分点（pp）。', '各点は5銘柄の平均です。右ほど株式保有に対する超過収益が高く、上ほどドローダウンの改善が大きくなります。両軸の単位はパーセントポイント（pp）です。'],
+    'viz.activeAxis': ['Active return (pp) →', '超额收益（pp）→', '超過収益（pp）→'],
+    'viz.drawdownAxis': ['Drawdown reduction (pp) ↑', '回撤改善（pp）↑', 'ドローダウン改善（pp）↑'],
+    'viz.tradeoffValue': ['Active return {active} pp · drawdown reduction {dd} pp', '超额收益 {active} pp · 回撤改善 {dd} pp', '超過収益 {active} pp・ドローダウン改善 {dd} pp'],
+    'viz.structureTitle': ['What positions did agents construct?', 'Agent 构建了什么交易结构？', 'どのようなポジションを構築したか'],
+    'viz.structureNote': ['Share of structures opened in the earnings task. The mix describes trading behaviour, not profitability. Values may differ from 100% by rounding.', '财报任务中各类已开仓结构的占比。结构构成反映交易行为，不代表盈利能力；四舍五入后合计可能略有差异。', '決算タスクで構築したポジションの構成比です。収益性ではなく取引行動を表します。丸めにより合計が100%と異なる場合があります。'],
+    'viz.structure0': ['Single-leg', '单腿', '単一レッグ'],
+    'viz.structure1': ['Vertical / two-leg', '垂直价差 / 双腿', '垂直スプレッド / 2レッグ'],
+    'viz.structure2': ['Straddle / strangle / condor', '跨式 / 宽跨式 / 秃鹰式', 'ストラドル / ストラングル / コンドル'],
+    'viz.structure3': ['Other multi-leg', '其他多腿', 'その他の複数レッグ'],
+    'viz.replayLink': ['Explore candles and recorded decisions ↗', '查看 K 线与历史决策 ↗', 'ローソク足と判断記録を見る ↗'],
+    'viz.tablesLink': ['Detailed tables and distributions ↓', '详细表格与收益分布 ↓', '詳細な表と収益分布 ↓'],
+    'viz.comparability': ['Model inputs can differ, including news availability. These charts describe the recorded panel; they are not a controlled ranking with identical inputs.', '模型输入可能不同，包括新闻是否可用。这些图表展示历史评测结果，不代表输入完全一致的受控排名。', 'ニュースの有無など、モデルへの入力は異なる場合があります。記録された評価結果であり、同一入力による統制された順位ではありません。'],
+    'infra.eyebrow': ['Infrastructure', '基础设施', 'インフラストラクチャ'],
+    'infra.title': ['Built on QFinZero', '基于 QFinZero 的金融基础设施', 'QFinZeroを基盤として'],
+    'infra.intro': ['QFinZero is the financial infrastructure behind the LiveOption release: market data, news and events, and a stateful simulated broker in one environment.', 'LiveOption 发布版本依赖 QFinZero 提供金融基础设施，在同一环境中连接行情、新闻事件与有状态的模拟券商。', 'LiveOptionの公開版は、QFinZeroの金融インフラを利用します。市場データ・ニュースとイベント・状態を保持する模擬ブローカーを一つの環境で提供します。'],
+    'infra.diagram': ['LiveOption and QFinZero architecture', 'LiveOption 与 QFinZero 架构', 'LiveOptionとQFinZeroの構成'],
+    'infra.agentTitle': ['Tasks, agents and evaluation', '任务、Agent 与评测', 'タスク・エージェント・評価'],
+    'infra.agentBody': ['Scenario rules, observations, model decisions and result analysis.', '场景规则、观察信息、模型决策与结果分析。', 'シナリオの規則・観測情報・モデルの判断・結果分析。'],
+    'infra.hub': ['Unified service hub · REST / Python APIs', '统一服务 Hub · REST / Python API', '統合サービスHub・REST / Python API'],
+    'infra.marketShort': ['Market data', '行情数据', '市場データ'],
+    'infra.newsShort': ['News & events', '新闻与事件', 'ニュースとイベント'],
+    'infra.brokerShort': ['Paper broker', '模拟券商', '模擬ブローカー'],
+    'infra.flowNote': ['Observations flow to the agent; decisions become simulated orders, fills and account states for evaluation.', '观察信息传给 Agent；决策转为模拟订单、成交和账户状态，供后续评测。', '観測をエージェントへ渡し、判断を模擬注文・約定・口座状態へ変換して評価します。'],
+    'infra.marketTitle': ['UPQ · Market and option data', 'UPQ · 行情与期权数据', 'UPQ・市場とオプションのデータ'],
+    'infra.marketBody': ['Historical bars, option chains and Greeks provide the market state used by the agent and the simulator.', '历史 K 线、期权链与 Greeks，为 Agent 和模拟器提供市场状态。', '過去の価格足・オプションチェーン・Greeksにより、エージェントとシミュレーターに市場状態を提供します。'],
+    'infra.marketDocs': ['Market data guide ↗', '行情数据文档 ↗', '市場データガイド ↗'],
+    'infra.newsTitle': ['ESP · News and event context', 'ESP · 新闻与事件背景', 'ESP・ニュースとイベントの文脈'],
+    'infra.newsBody': ['Time-aligned news and earnings events supply context for the configured trading task.', '按时间对齐的新闻与财报事件，为配置的交易任务提供背景信息。', '時刻をそろえたニュースと決算イベントにより、設定した取引タスクに必要な背景情報を提供します。'],
+    'infra.newsDocs': ['News and events reference ↗', '新闻与事件文档 ↗', 'ニュースとイベントのリファレンス ↗'],
+    'infra.brokerTitle': ['PMB · Stateful brokerage simulation', 'PMB · 有状态的券商模拟', 'PMB・状態を保持する証券取引シミュレーション'],
+    'infra.brokerBody': ['Simulated accounts, order lifecycles, fills and margin checks support portfolio replay and execution records.', '模拟账户、订单生命周期、成交与保证金检查，支持组合回放和执行记录。', '模擬口座・注文ライフサイクル・約定・証拠金チェックにより、ポートフォリオのリプレイと執行記録を支えます。'],
+    'infra.brokerDocs': ['Trading guide ↗', '交易服务文档 ↗', '取引ガイド ↗'],
+    'infra.boundary': ['LiveOption defines the option-trading benchmark and agent workflow. QFinZero runs separately and supplies the financial services; it is an open-source project under the MIT License.', 'LiveOption 定义期权交易评测与 Agent 工作流程；QFinZero 独立运行，提供底层金融服务，并以 MIT 协议开源。', 'LiveOptionはオプション取引の評価とエージェントの処理手順を定義します。QFinZeroは独立して動作し、金融サービスを提供するMITライセンスのオープンソースプロジェクトです。'],
+    'infra.repository': ['Explore QFinZero on GitHub ↗', '前往 QFinZero GitHub 项目 ↗', 'GitHubでQFinZeroを見る ↗'],
+  };
+  for (const [key, translations] of Object.entries(messages)) {
+    ['en','cn','jp'].forEach((language,index)=>{window.LO_LOCALES[language][key]=translations[index];});
+  }
+}
+
 // Recorded replay explorer: keep source artifacts original, translate UI only.
 {
   const messages = {

@@ -8,9 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="js/locales.js?v=6"></script>
+<script src="js/locales.js?v=7"></script>
 <script src="js/i18n.js?v=3"></script>
-<link rel="stylesheet" href="css/style.css?v=6">
+<link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -24,6 +24,8 @@
       <a href="#overview"><span data-i18n="nav.overview">Overview</span></a>
       <a href="#tasks"><span data-i18n="nav.tasks">Tasks</span></a>
       <a href="#demos"><span data-i18n="scenes.nav">Scenarios</span></a>
+      <a href="#visual-results"><span data-i18n="viz.nav">Figures</span></a>
+      <a href="#infrastructure">QFinZero</a>
       <a href="#cite"><span data-i18n="nav.citation">Citation</span></a>
     </div>
     <div class="nav-actions">
@@ -33,7 +35,7 @@
         <option value="jp" lang="ja">日本語</option>
       </select>
       <button class="btn btn-sm" type="button" disabled title="Repository link coming soon" aria-label="GitHub code — link coming soon" data-i18n-title="nav.codeSoon" data-i18n-aria-label="nav.codeAria"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.558 21.923c.563.105.773-.244.773-.543v-2.094c-3.14.682-3.803-1.332-3.803-1.332-.514-1.306-1.255-1.654-1.255-1.654-1.026-.701.078-.687.078-.687 1.134.08 1.73 1.165 1.73 1.165 1.008 1.727 2.644 1.228 3.29.94.102-.73.394-1.228.716-1.51-2.507-.286-5.143-1.254-5.143-5.581 0-1.233.44-2.24 1.164-3.03-.117-.286-.505-1.434.11-2.987 0 0 .949-.304 3.094 1.16A10.76 10.76 0 0 1 12 6.142c.956.005 1.919.13 2.817.38 2.144-1.465 3.092-1.16 3.092-1.16.617 1.553.229 2.701.112 2.987.724.79 1.163 1.797 1.163 3.03 0 4.339-2.64 5.292-5.155 5.572.405.35.766 1.042.766 2.1v3.08c0 .302.204.653.78.542A11.252 11.252 0 0 0 12 .75Z"/></svg><span data-i18n="nav.code">Code</span></button>
-      <a class="btn btn-sm" href="#cite"><span data-i18n="nav.paper">Paper</span></a>
+      <a class="btn btn-sm" href="https://arxiv.org/abs/2609.33470" target="_blank" rel="noopener"><span data-i18n="nav.paper">Paper</span></a>
       <a class="btn btn-sm btn-primary" href="demos.html" target="_blank" rel="noopener"><span data-i18n="nav.viewDemos">View demos</span> <span aria-hidden="true">↗</span></a>
     </div>
   </div>
@@ -49,7 +51,7 @@
     </p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="demos.html" target="_blank" rel="noopener"><span data-i18n="hero.explore">Explore recorded demos</span> <span aria-hidden="true">↗</span></a>
-      <a class="btn" href="#cite"><span data-i18n="hero.readPaper">Read the paper</span></a>
+      <a class="btn" href="https://arxiv.org/abs/2609.33470" target="_blank" rel="noopener"><span data-i18n="hero.readPaper">Read the paper</span></a>
     </div>
 
 
@@ -154,6 +156,53 @@
   </div>
 </section>
 
+<section id="visual-results">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow" data-i18n="viz.eyebrow">Interactive findings</div>
+      <h2 data-i18n="viz.title">Look beyond a single return</h2>
+      <p data-i18n="viz.intro">Explore eight models through uncertainty, risk and the positions they constructed. These figures use the same exported benchmark results as the tables below.</p>
+    </div>
+    <p class="note viz-mobile-hint" data-i18n="viz.scrollHint">Swipe charts horizontally to see the full axes and all values.</p>
+    <div id="visual-explorer"><p role="status" data-i18n="viz.loading">Loading benchmark figures…</p></div>
+    <div class="viz-links">
+      <a class="btn" href="demos.html?task=overlay&amp;scenario=overlay-qqq-hedge&amp;view=market" data-i18n="viz.replayLink">Explore candles and recorded decisions ↗</a>
+      <a href="#results" data-i18n="viz.tablesLink">Detailed tables and distributions ↓</a>
+    </div>
+    <p class="note" data-i18n="viz.comparability">Model inputs can differ, including news availability. These charts describe the recorded panel; they are not a controlled ranking with identical inputs.</p>
+  </div>
+</section>
+
+<section class="alt" id="infrastructure">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow" data-i18n="infra.eyebrow">Infrastructure</div>
+      <h2 data-i18n="infra.title">Built on QFinZero</h2>
+      <p data-i18n="infra.intro">QFinZero is the financial infrastructure behind the LiveOption release: market data, news and events, and a stateful simulated broker in one environment.</p>
+    </div>
+    <div class="infra-layout">
+      <div class="infra-flow" role="group" aria-label="LiveOption and QFinZero architecture" data-i18n-aria-label="infra.diagram">
+        <div class="infra-layer"><span class="tag">LiveOption</span><h3 data-i18n="infra.agentTitle">Tasks, agents and evaluation</h3><p data-i18n="infra.agentBody">Scenario rules, observations, model decisions and result analysis.</p></div>
+        <span class="infra-arrow" aria-hidden="true">↓</span>
+        <div class="infra-hub"><strong>QFinZero</strong><span data-i18n="infra.hub">Unified service hub · REST / Python APIs</span></div>
+        <span class="infra-arrow" aria-hidden="true">↓</span>
+        <div class="infra-services">
+          <div><code>UPQ</code><span data-i18n="infra.marketShort">Market data</span></div>
+          <div><code>ESP</code><span data-i18n="infra.newsShort">News &amp; events</span></div>
+          <div><code>PMB</code><span data-i18n="infra.brokerShort">Paper broker</span></div>
+        </div>
+        <p class="note" data-i18n="infra.flowNote">Observations flow to the agent; decisions become simulated orders, fills and account states for evaluation.</p>
+      </div>
+      <div class="infra-description">
+        <article><h3 data-i18n="infra.marketTitle">UPQ · Market and option data</h3><p data-i18n="infra.marketBody">Historical bars, option chains and Greeks provide the market state used by the agent and the simulator.</p><a href="https://github.com/CityU-MLO/qfinzero/blob/main/docs/en/upq/agent-guide.md" target="_blank" rel="noopener" data-i18n="infra.marketDocs">Market data guide ↗</a></article>
+        <article><h3 data-i18n="infra.newsTitle">ESP · News and event context</h3><p data-i18n="infra.newsBody">Time-aligned news and earnings events supply context for the configured trading task.</p><a href="https://github.com/CityU-MLO/qfinzero/blob/main/docs/en/esp/README.md" target="_blank" rel="noopener" data-i18n="infra.newsDocs">News and events reference ↗</a></article>
+        <article><h3 data-i18n="infra.brokerTitle">PMB · Stateful brokerage simulation</h3><p data-i18n="infra.brokerBody">Simulated accounts, order lifecycles, fills and margin checks support portfolio replay and execution records.</p><a href="https://github.com/CityU-MLO/qfinzero/blob/main/docs/en/pmb/agent-guide.md" target="_blank" rel="noopener" data-i18n="infra.brokerDocs">Trading guide ↗</a></article>
+      </div>
+    </div>
+    <div class="infra-footer"><p data-i18n="infra.boundary">LiveOption defines the option-trading benchmark and agent workflow. QFinZero runs separately and supplies the financial services; it is an open-source project under the MIT License.</p><a class="btn btn-teal" href="https://github.com/CityU-MLO/qfinzero" target="_blank" rel="noopener" data-i18n="infra.repository">Explore QFinZero on GitHub ↗</a></div>
+  </div>
+</section>
+
 <section id="framework">
   <div class="container narrow">
     <div class="sec-head">
@@ -215,12 +264,14 @@
       <div class="eyebrow"><span data-i18n="nav.citation">Citation</span></div>
       <h2><span data-i18n="citation.title">How to cite</span></h2>
     </div>
-    <div class="cite" lang="en">@inproceedings{liveoption2026,
-  title     = {LiveOption: Evaluating LLM Agents in Structured Option
-               Trading with Nonlinear Payoffs},
-  author    = {Anonymous},
-  booktitle = {Advances in Neural Information Processing Systems},
-  year      = {2026}
+    <div class="cite" lang="en">@misc{luo2026liveoptionevaluatingllmagents,
+      title={LiveOption: Evaluating LLM Agents in Structured Option Trading with Nonlinear Payoffs},
+      author={Haochen Luo and Yifan Li and Binh Minh An and Xiaolong Luo and Zhengzhao Lai and Yuan Zhang and Chen Liu},
+      year={2026},
+      eprint={2609.33470},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2609.33470},
 }</div>
     <div class="callout" style="margin-top:1.5rem">
       <strong><span data-i18n="citation.disclaimerTitle">This paper does not provide investment advice.</span></strong> <span data-i18n="citation.disclaimer">The methods discussed may involve substantial risk and could result in significant financial loss.</span>
@@ -238,6 +289,7 @@
 <script src="js/scenes.js?v=4"></script>
 <script src="js/charts.js?v=3"></script>
 <script src="js/results.js?v=3"></script>
+<script src="js/homepage.js?v=1"></script>
 <!-- Default Statcounter code for LO https://liveoption.github.io/ -->
 <script type="text/javascript">
 var sc_project=13361926;

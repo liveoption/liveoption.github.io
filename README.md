@@ -3,7 +3,7 @@
 Static project website with benchmark results, figures, and recorded model demos.
 No API key or backend is needed.
 
-- `index.html`: project overview, scenario guide dialogs with original SVG illustrations, and collapsible results.
+- `index.html`: project overview, scenario guide dialogs, three interactive benchmark charts, a QFinZero infrastructure section, the arXiv citation and collapsible detailed results.
 - `demos.html`: recorded demos, selected by task, scenario and model. All eight models share one selector and opening comparison. Source builds remain internal provenance; reference inputs remain accessible by model and input differences are marked. Views separate the opening comparison, historical candles, paginated decision journal and run-level statistics.
 - Both pages use the invisible Statcounter project `13361926`.
 
@@ -46,6 +46,13 @@ node scripts/check-i18n.mjs
 
 Scenario guides are implemented in `js/scenes.js`. Their original SVG diagrams
 are conceptual illustrations; all captions and guide text are localized.
+
+`js/homepage.js` draws mean/median returns and confidence intervals, overlay
+return/drawdown trade-offs, and earnings structure composition directly from
+`data/results.json`. Model highlighting and task/mandate selections persist
+across language switches. Source results are not modified. The QFinZero section
+links to the official project and its UPQ, ESP and PMB documentation; it does not
+contact any financial service from this static website.
 
 ## Archived replay data
 
