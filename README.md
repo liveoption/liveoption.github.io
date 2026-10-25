@@ -4,7 +4,7 @@ Static project website with benchmark results, figures, and recorded model demos
 No API key or backend is needed.
 
 - `index.html`: project overview, scenario guide dialogs with original SVG illustrations, and collapsible results.
-- `demos.html`: recorded demos, selected by task, scenario and build.
+- `demos.html`: recorded demos, selected by task, scenario, build and model. Views separate the opening comparison, historical candles, paginated decision journal and run-level statistics.
 - Both pages use the invisible Statcounter project `13361926`.
 
 The Code buttons are intentionally disabled until a repository URL is supplied.
@@ -46,3 +46,44 @@ node scripts/check-i18n.mjs
 
 Scenario guides are implemented in `js/scenes.js`. Their original SVG diagrams
 are conceptual illustrations; all captions and guide text are localized.
+
+## Archived replay data
+
+`js/replay.js` loads one model/run at a time from `data/replays/` and historical
+OHLCV from `data/market/`. All records are from the existing five benchmark
+cases. No model inference, brokerage writes or synthetic decisions occur.
+Later observations are model-specific and must not be presented as a shared
+prompt comparison. Proposed orders and recorded fills remain separate.
+
+Run statistics use the first saved equity snapshot as their baseline.
+Drawdown uses each day's last saved snapshot. The underlying return is a price-only
+reference indexed to its first stored price, without option exposure or fees.
+These selected-case views do not replace panel-wide benchmark statistics.
+
+The public export includes original response text and prompt hashes, but not
+later full observations, credentials, account identifiers or server paths.
+The existing opening observation remains available in the comparison header.
+JSON downloads contain background, settings and results for the selected run.
+
+Regenerate on the archive host with Python 3.11+ (read-only source access):
+
+```sh
+python3 scripts/export-replays.py \
+  --archive /path/to/release/main \
+  --gateway /path/to/aligned/gateway/output \
+  --scenarios data/scenarios \
+  --out /path/to/exported-data \
+  --hub http://127.0.0.1:19777
+```
+
+Copy the generated `replays/` and `market/` directories under `data/`, then run:
+
+```sh
+node scripts/check-i18n.mjs
+node scripts/check-replays.mjs
+node --check js/replay.js
+```
+
+The exporter rejects missing cases/prices and potential credentials, rather
+than inventing replacement records. Missing or unverified completion is labeled
+explicitly in the interface. Invisible Statcounter integration is unchanged.

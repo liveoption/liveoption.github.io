@@ -127,6 +127,8 @@
         $('prompt-box').textContent = g.user;
         renderAnswers();
         renderMeta();
+        window.LORecording = {scenario, build, models: MODEL_META};
+        window.dispatchEvent(new CustomEvent('lo:recordingchange', {detail: window.LORecording}));
       };
       seg.appendChild(b);
     });
@@ -164,12 +166,15 @@
     $('toggle-prompt').setAttribute('aria-expanded', 'false');
     $('toggle-prompt').disabled = true;
     $('demo-main').setAttribute('aria-busy', 'true');
+    window.dispatchEvent(new CustomEvent('lo:recordingloading'));
+    window.LORecording = null;
     try {
       const loaded = await readJSON(`data/scenarios/${entry.id}.json`);
       if (currentRequest !== requestId) return;
       if (!loaded.groups?.length) throw new Error(t('demo.noDecisions'));
       scenario = loaded;
-      build = scenario.groups[0];
+      const requestedBuild = new URLSearchParams(location.search).get('build');
+      build = scenario.groups.find(group => group.build === requestedBuild) || scenario.groups[0];
       $('sc-title').textContent = scenarioText(scenario, 'title');
       $('sc-blurb').textContent = scenarioText(scenario, 'blurb');
       $('prompt-box').textContent = build.user;
@@ -177,6 +182,8 @@
       renderMeta();
       renderAnswers();
       $('toggle-prompt').disabled = false;
+      window.LORecording = {scenario, build, models: MODEL_META};
+      window.dispatchEvent(new CustomEvent('lo:recordingchange', {detail: window.LORecording}));
       const url = new URL(window.location.href);
       url.searchParams.set('task', task.id);
       url.searchParams.set('scenario', entry.id);
