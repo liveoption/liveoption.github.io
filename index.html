@@ -8,9 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="js/locales.js?v=8"></script>
+<script src="js/locales.js?v=9"></script>
 <script src="js/i18n.js?v=3"></script>
-<link rel="stylesheet" href="css/style.css?v=8">
+<link rel="stylesheet" href="css/style.css?v=9">
 </head>
 <body>
 
@@ -21,12 +21,11 @@
       <span><span class="lo-a">Live</span><span class="lo-b">Option</span></span>
     </a>
     <div class="nav-links">
-      <a href="#overview"><span data-i18n="nav.overview">Overview</span></a>
-      <a href="#tasks"><span data-i18n="nav.tasks">Tasks</span></a>
-      <a href="#demos"><span data-i18n="scenes.nav">Scenarios</span></a>
-      <a href="#visual-results"><span data-i18n="viz.nav">Figures</span></a>
+      <a href="#tasks" data-i18n="layout.tasksNav">Task design</a>
+      <a href="#agent-design" data-i18n="layout.agentNav">Agent design</a>
       <a href="#infrastructure">QFinZero</a>
-      <a href="#cite"><span data-i18n="nav.citation">Citation</span></a>
+      <a href="#results" data-i18n="layout.resultsNav">Results</a>
+      <a href="#cite" data-i18n="nav.citation">Citation</a>
     </div>
     <div class="nav-actions">
       <select class="language-select" data-language-select aria-label="Language" data-i18n-aria-label="nav.language">
@@ -47,7 +46,7 @@
     <h1><span class="a">Live</span><span class="b">Option</span></h1>
     <p class="tagline"><span data-i18n="hero.tagline">Evaluating LLM Agents in Structured Option Trading with Nonlinear Payoffs</span></p>
     <p class="lede">
-      <span data-i18n="hero.lede">Equity benchmarks ask whether a model can call direction. Options ask something harder: construct a position whose payoff is nonlinear, under margin and liquidity constraints, and carry it through an event. LiveOption is a replay benchmark that puts eight LLM agents through three such tasks and reports what they actually did, not only what they earned.</span>
+      <span data-i18n="layout.hero">Equity benchmarks ask whether a model can call direction. Options ask something harder: construct a position whose payoff is nonlinear, under margin and liquidity constraints, and carry it through an event. LiveOption is a replay benchmark that puts eight LLM agents through three such tasks and reports what they actually did, not only what they earned.</span>
     </p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="demos.html" target="_blank" rel="noopener"><span data-i18n="hero.explore">Explore recorded demos</span> <span aria-hidden="true">↗</span></a>
@@ -58,36 +57,36 @@
   </div>
 </header>
 
-<section id="demos">
+<main>
+<section id="tasks" class="design-section">
+  <span id="overview" class="section-anchor"></span><span id="demos" class="section-anchor"></span>
   <div class="container">
-    <div class="sec-head">
-      <div class="eyebrow"><span data-i18n="scenes.eyebrow">Scenario guide</span></div>
-      <h2><span data-i18n="scenes.title">Understand the trading scenarios</span></h2>
-      <p><span data-i18n="scenes.intro">Open a scenario guide to explore its objective, decision process and recorded cases.</span></p>
-    </div>
-    <div class="cards scenario-previews">
-      <button class="card scenario-card" type="button" data-scene="earnings" aria-haspopup="dialog" aria-controls="scenario-guide">
-        <span class="tag orange"><span data-i18n="task.earnings.name">Earnings bet</span></span>
-        <span class="scenario-card-title" data-i18n="task.earnings.title">Trade an earnings event</span>
-        <span class="scenario-card-body" data-i18n="scenes.earnings.preview">Position around a scheduled announcement while balancing direction, option premium and volatility risk.</span>
-        <span class="demo-link"><span data-i18n="scenes.learn">About this scenario</span> <span aria-hidden="true">＋</span></span>
+    <div class="sec-head"><div class="eyebrow" data-i18n="layout.tasksEyebrow">01 / Task design</div><h2 data-i18n="layout.tasksTitle">Three option-trading tasks</h2><p data-i18n="layout.tasksIntro">Different objectives, decision horizons and constraints. Open a task to explore a recorded case and its design.</p></div>
+    <div class="cards task-design-cards">
+      <button class="card task-detail-card" type="button" data-scene="overlay" data-scene-view="example" aria-haspopup="dialog" aria-controls="scenario-guide" aria-labelledby="task-overlay-title">
+        <span class="tag " data-i18n="task.overlay.name">overlay</span>
+        <span class="scenario-card-title" id="task-overlay-title" data-i18n="layout.overlayTitle">overlay</span>
+        <span class="scenario-card-body" data-i18n="layout.overlayBody">Task objective and constraints.</span>
+        <span class="task-facts"><span data-i18n="layout.overlayFact1">Decision horizon</span><span data-i18n="layout.overlayFact2">Trading rules</span></span>
+        <span class="demo-link" data-i18n="case.open">View a recorded example ＋</span>
       </button>
-      <button class="card scenario-card" type="button" data-scene="0dte" aria-haspopup="dialog" aria-controls="scenario-guide">
-        <span class="tag gold"><span data-i18n="task.0dte.name">0DTE intraday</span></span>
-        <span class="scenario-card-title" data-i18n="task.0dte.title">Decide at the market open</span>
-        <span class="scenario-card-body" data-i18n="scenes.0dte.preview">Make intraday decisions in SPY options whose remaining life ends on the same trading day.</span>
-        <span class="demo-link"><span data-i18n="scenes.learn">About this scenario</span> <span aria-hidden="true">＋</span></span>
+      <button class="card task-detail-card" type="button" data-scene="earnings" data-scene-view="example" aria-haspopup="dialog" aria-controls="scenario-guide" aria-labelledby="task-earnings-title">
+        <span class="tag orange" data-i18n="task.earnings.name">earnings</span>
+        <span class="scenario-card-title" id="task-earnings-title" data-i18n="layout.earningsTitle">earnings</span>
+        <span class="scenario-card-body" data-i18n="layout.earningsBody">Task objective and constraints.</span>
+        <span class="task-facts"><span data-i18n="layout.earningsFact1">Decision horizon</span><span data-i18n="layout.earningsFact2">Trading rules</span></span>
+        <span class="demo-link" data-i18n="case.open">View a recorded example ＋</span>
       </button>
-      <button class="card scenario-card" type="button" data-scene="overlay" aria-haspopup="dialog" aria-controls="scenario-guide">
-        <span class="tag "><span data-i18n="task.overlay.name">Portfolio overlay</span></span>
-        <span class="scenario-card-title" data-i18n="task.overlay.title">Hedge an equity position</span>
-        <span class="scenario-card-body" data-i18n="scenes.overlay.preview">Add an option layer to an existing stock portfolio, balancing protection, option cost and participation in market gains.</span>
-        <span class="demo-link"><span data-i18n="scenes.learn">About this scenario</span> <span aria-hidden="true">＋</span></span>
+      <button class="card task-detail-card" type="button" data-scene="0dte" data-scene-view="example" aria-haspopup="dialog" aria-controls="scenario-guide" aria-labelledby="task-0dte-title">
+        <span class="tag gold" data-i18n="task.0dte.name">0dte</span>
+        <span class="scenario-card-title" id="task-0dte-title" data-i18n="layout.0dteTitle">0dte</span>
+        <span class="scenario-card-body" data-i18n="layout.0dteBody">Task objective and constraints.</span>
+        <span class="task-facts"><span data-i18n="layout.0dteFact1">Decision horizon</span><span data-i18n="layout.0dteFact2">Trading rules</span></span>
+        <span class="demo-link" data-i18n="case.open">View a recorded example ＋</span>
       </button>
     </div>
   </div>
 </section>
-
 <dialog class="scene-dialog" id="scenario-guide" aria-labelledby="scene-title">
   <div class="scene-shell">
     <header class="scene-header">
@@ -102,84 +101,18 @@
     <div class="scene-content" id="scene-content"></div>
   </div>
 </dialog>
-
-<section id="overview">
-  <div class="container narrow">
-    <div class="sec-head">
-      <div class="eyebrow"><span data-i18n="nav.overview">Overview</span></div>
-      <h2><span data-i18n="overview.title">What the benchmark measures</span></h2>
-    </div>
-    <p>
-      <span data-i18n="overview.options">An option position is a bet on more than direction. Its value moves with the underlying, with implied volatility, and with the passage of time, and the three pull against each other. An agent that is right about where a stock is going can still lose, because it paid too much for the volatility it bought or carried the position one day too long.</span>
-    </p>
-    <p>
-      <span data-i18n="overview.replay">LiveOption replays 2025 market data through a brokerage-style engine that enforces margin, multi-leg position management and contract consistency. At every decision step the agent is shown only information timestamped before that step. We record the full trace — the thesis text, the intent stream, the fill log and the Greek snapshots — and evaluate on three axes: what the agent earned, how it behaved, and what it stopped doing when we removed part of its context.</span>
-    </p>
-
-    <div class="callout teal">
-      <strong><span data-i18n="overview.findingTitle">The headline result is negative, and that is the point.</span></strong>
-      <span data-i18n="overview.finding">Median episode returns are below zero for all eight models in both episodic tasks, and only the widest earnings gap in the panel separates two models after correction for multiple comparisons. What does vary measurably is behaviour: participation, tenor, structure mix and tail risk. That is the argument for reporting distributions and interventions rather than mean returns.</span>
-    </div>
+<section id="agent-design" class="alt design-section">
+  <span id="framework" class="section-anchor"></span>
+  <div class="container">
+    <div class="sec-head"><div class="eyebrow" data-i18n="layout.agentEyebrow">02 / Agent design</div><h2 data-i18n="layout.agentTitle">From market context to executable intent</h2><p data-i18n="layout.agentIntro">An analyzer interprets the market; an executor turns its intent into orders. AVSR and QOCR adapt this workflow to options.</p></div>
+    <div id="agent-explorer"><p role="status" data-i18n="replay.loading">Loading the archived run…</p></div>
+    <a class="agent-paper-link" href="https://arxiv.org/pdf/2609.33470#page=4" target="_blank" rel="noopener" data-i18n="agent.paper">Design details · Section 2.3 and Appendix G ↗</a>
   </div>
 </section>
-
-<section class="alt" id="tasks">
+<section id="infrastructure" class="design-section">
   <div class="container">
     <div class="sec-head">
-      <div class="eyebrow"><span data-i18n="tasks.eyebrow">Task suites</span></div>
-      <h2><span data-i18n="tasks.title">Three ways an agent can be wrong</span></h2>
-      <p><span data-i18n="tasks.intro">Each suite isolates a different failure mode, and each one is in the demos.</span></p>
-    </div>
-    <div class="cards">
-      <button class="card task-detail-card" type="button" data-scene="overlay" data-scene-view="example" aria-haspopup="dialog" aria-controls="scenario-guide">
-        <span class="tag"><span data-i18n="task.overlay.name">Portfolio overlay</span></span>
-        <span class="scenario-card-title" data-i18n="tasks.overlayTitle">Hedging and covered calls</span>
-        <span class="scenario-card-body">
-          <span data-i18n="tasks.overlayBody">A year-long option overlay on an existing equity position, five assets per mandate. The question is not whether the stock went up — it is whether the overlay beat simply holding the stock. Active return is negative for all eight models under hedging and seven of eight under covered calls, while drawdown falls for seven of eight. The overlay changes the risk profile; it does not add alpha.</span>
-        </span>
-        <span class="demo-link" data-i18n="case.open">View a recorded example ＋</span>
-      </button>
-      <button class="card task-detail-card" type="button" data-scene="earnings" data-scene-view="example" aria-haspopup="dialog" aria-controls="scenario-guide">
-        <span class="tag orange"><span data-i18n="task.earnings.name">Earnings bet</span></span>
-        <span class="scenario-card-title" data-i18n="tasks.earningsTitle">Event-driven volatility</span>
-        <span class="scenario-card-body">
-          <span data-i18n="tasks.earningsBody">Enter two sessions before a scheduled announcement and carry the position through it. Implied volatility is at its highest exactly when the agent is deciding what to pay. Eighty-three percent of opened structures are net debit: the panel buys premium into a scheduled volatility contraction, and theta is large and negative for every model.</span>
-        </span>
-        <span class="demo-link" data-i18n="case.open">View a recorded example ＋</span>
-      </button>
-      <button class="card task-detail-card" type="button" data-scene="0dte" data-scene-view="example" aria-haspopup="dialog" aria-controls="scenario-guide">
-        <span class="tag gold"><span data-i18n="task.0dte.name">0DTE intraday</span></span>
-        <span class="scenario-card-title" data-i18n="tasks.0dteTitle">Same-day expiry on SPY</span>
-        <span class="scenario-card-body">
-          <span data-i18n="tasks.0dteBody">102 sessions of options that expire at the close, where gamma and theta are both extreme and a position left open is a position decaying. Every model loses on the majority of sessions. The three positive means in the panel rest on a handful of right-tail sessions and do not survive a realistic half-spread charge.</span>
-        </span>
-        <span class="demo-link" data-i18n="case.open">View a recorded example ＋</span>
-      </button>
-    </div>
-  </div>
-</section>
-
-<section id="visual-results">
-  <div class="container">
-    <div class="sec-head">
-      <div class="eyebrow" data-i18n="viz.eyebrow">Interactive findings</div>
-      <h2 data-i18n="viz.title">Look beyond a single return</h2>
-      <p data-i18n="viz.intro">Explore eight models through uncertainty, risk and the positions they constructed. These figures use the same exported benchmark results as the tables below.</p>
-    </div>
-    <p class="note viz-mobile-hint" data-i18n="viz.scrollHint">Swipe charts horizontally to see the full axes and all values.</p>
-    <div id="visual-explorer"><p role="status" data-i18n="viz.loading">Loading benchmark figures…</p></div>
-    <div class="viz-links">
-      <a class="btn" href="demos.html?task=overlay&amp;scenario=overlay-qqq-hedge&amp;view=market" data-i18n="viz.replayLink">Explore candles and recorded decisions ↗</a>
-      <a href="#results" data-i18n="viz.tablesLink">Detailed tables and distributions ↓</a>
-    </div>
-    <p class="note" data-i18n="viz.comparability">Model inputs can differ, including news availability. These charts describe the recorded panel; they are not a controlled ranking with identical inputs.</p>
-  </div>
-</section>
-
-<section class="alt" id="infrastructure">
-  <div class="container">
-    <div class="sec-head">
-      <div class="eyebrow" data-i18n="infra.eyebrow">Infrastructure</div>
+      <div class="eyebrow" data-i18n="layout.infraEyebrow">03 / QFinZero</div>
       <h2 data-i18n="infra.title">Built on QFinZero</h2>
       <p data-i18n="infra.intro">QFinZero is the financial infrastructure behind the LiveOption release: market data, news and events, and a stateful simulated broker in one environment.</p>
     </div>
@@ -206,27 +139,15 @@
   </div>
 </section>
 
-<section id="framework">
-  <div class="container narrow">
-    <div class="sec-head">
-      <div class="eyebrow"><span data-i18n="framework.eyebrow">Framework</span></div>
-      <h2><span data-i18n="framework.title">What the agent sees, and what it may do</span></h2>
-    </div>
-    <p>
-      <span data-i18n="framework.body">Raw option chains are too large and too redundant to hand a model directly. The engine summarises the volatility surface at a small set of anchor points over moneyness and tenor, and quantises the chain into expiry buckets and moneyness levels, so an agent specifies a trade at the level of financial intent rather than picking among hundreds of contracts. Every order then passes a risk layer that enforces margin feasibility, per-trade loss caps and exposure limits before it reaches the matcher.</span>
-    </p>
-    <figure>
-      <img src="img/action_composition.png" alt="Two bar charts: the call versus put split of intraday 0DTE legs, and the mix of traded structures in the earnings task, for eight models." data-i18n-alt="figure.alt">
-      <figcaption>
-        <span data-i18n="figure.intro">What the agents actually traded.</span> <strong>(A)</strong> <span data-i18n="figure.a">call versus put legs in intraday 0DTE.</span> <strong>(B)</strong> <span data-i18n="figure.b">the mix of structures opened in the earnings task. Vertical and two-leg positions dominate for most of the panel.</span>
-      <span class="original-figure-note" data-i18n="figure.original">Figures from the paper are shown in their original language.</span>
-      </figcaption>
-    </figure>
-  </div>
-</section>
-
-<section class="alt" id="results">
+<section id="results" class="alt design-section">
+  <span id="visual-results" class="section-anchor"></span>
   <div class="container">
+    <div class="sec-head"><div class="eyebrow" data-i18n="layout.resultsEyebrow">04 / Results</div><h2 data-i18n="layout.resultsTitle">Explore outcomes, risk and behaviour</h2><p data-i18n="layout.resultsIntro">Compare all eight models, inspect uncertainty and examine results across assets. Every chart reads the published result files.</p></div>
+    <div id="visual-explorer"><p role="status" data-i18n="viz.loading">Loading benchmark figures…</p></div>
+    <p class="note" data-i18n="viz.comparability">Model inputs can differ, including news availability. These charts describe the recorded panel; they are not a controlled ranking with identical inputs.</p>
+    <div class="viz-links"><a class="btn" href="demos.html?task=overlay&amp;scenario=overlay-qqq-hedge&amp;view=market" data-i18n="viz.replayLink">Explore candles and recorded decisions ↗</a></div>
+<div class="results-detail-wrap" id="result-tables">
+  <div>
     <details class="results-details">
       <summary><span><span class="eyebrow"><span data-i18n="results.eyebrow">Supporting results</span></span><span class="results-title"><span data-i18n="results.title">Benchmark tables and return distributions</span></span><span class="note"><span data-i18n="results.expand">Expand to explore the evaluation statistics.</span></span></span><span class="details-icon" aria-hidden="true">+</span></summary>
       <div class="results-content">
@@ -245,22 +166,15 @@
     </div>
     <div class="note" id="results-note"></div>
 
-    <div style="margin-top:3rem">
-      <h3 style="text-align:center"><span data-i18n="results.distributionTitle">Where the returns come from</span></h3>
-      <p class="note" style="text-align:center;max-width:680px;margin:0 auto 1rem">
-        <span data-i18n="results.distributionIntro">Each dot is one episode. The box spans the interquartile range and the line is the median. The means sit to the right of the medians because a few right-tail episodes carry them.</span>
-      </p>
-      <div id="dist-chart"></div>
-    </div>
-
     <div class="callout" style="margin-top:2.5rem">
       <strong><span data-i18n="results.caveatTitle">One caveat the panel carries.</span></strong> <span data-i18n="results.caveat">Six models were served through a single hosted provider; GPT-5.6-Terra and Gemini-3-Flash were reached through a separate gateway on a later engine build, and that build supplied no news headlines in the earnings observation. They read a different page from the other six on that task. The demo labels which build each recorded answer came from for exactly this reason.</span>
     </div>
       </div>
     </details>
   </div>
+</div>  </div>
 </section>
-
+</main>
 <section class="alt" id="cite">
   <div class="container narrow">
     <div class="sec-head">
@@ -291,9 +205,10 @@
 
 <script src="js/scenes.js?v=5"></script>
 <script src="js/case-preview.js?v=1"></script>
-<script src="js/charts.js?v=3"></script>
-<script src="js/results.js?v=3"></script>
-<script src="js/homepage.js?v=1"></script>
+<script src="js/charts.js?v=4"></script>
+<script src="js/results.js?v=4"></script>
+<script src="js/homepage.js?v=2"></script>
+<script src="js/agent-design.js?v=1"></script>
 <!-- Default Statcounter code for LO https://liveoption.github.io/ -->
 <script type="text/javascript">
 var sc_project=13361926;

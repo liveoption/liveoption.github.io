@@ -26,7 +26,7 @@ for (const filename of ['index.html', 'demos.html', 'qfinzero.html']) {
   assert.ok(html.includes('data-language-select'), `${filename}: missing language selector`);
   assert.equal(html.split('sc_project=13361926').length, 2, `${filename}: analytics count`);
 }
-for (const filename of ['js/playground.js', 'js/results.js', 'js/charts.js', 'js/scenes.js', 'js/replay.js', 'js/homepage.js', 'js/case-preview.js', 'js/qfinzero.js']) {
+for (const filename of ['js/playground.js', 'js/results.js', 'js/charts.js', 'js/scenes.js', 'js/replay.js', 'js/homepage.js', 'js/agent-design.js', 'js/case-preview.js', 'js/qfinzero.js']) {
   const code = read(filename);
   for (const [, key] of code.matchAll(/(?:\bt|labelKey):?\(?\s*'([\w.-]+)'/g)) {
     assert.ok(locales.en[key], `${filename}: unknown translation ${key}`);

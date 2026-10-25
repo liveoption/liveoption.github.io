@@ -3,7 +3,7 @@
 Static project website with benchmark results, figures, and recorded model demos.
 No API key or backend is needed.
 
-- `index.html`: project overview, task dialogs with archived case charts and decisions, three interactive benchmark charts, a QFinZero infrastructure section, the arXiv citation and collapsible detailed results.
+- `index.html`: task design → agent design → QFinZero → results. Task dialogs retain archived charts and decisions; the result dashboard combines episode returns, distributions, overlay trade-offs and per-asset comparisons.
 - `qfinzero.html`: QFinZero project details, its role in LiveOption, official GitHub and ACL paper links, and the complete downloadable author-supplied BibTeX.
 - `demos.html`: recorded demos, selected by task, scenario and model. All eight models share one selector and opening comparison. Source builds remain internal provenance; reference inputs remain accessible by model and input differences are marked. Views separate the opening comparison, historical candles, paginated decision journal and run-level statistics.
 - All public pages use the invisible Statcounter project `13361926`.
@@ -51,9 +51,14 @@ are conceptual illustrations; all captions and guide text are localized.
 using the existing replay archives for prices, returns, decisions and proposed
 orders. It loads one case/model on demand; no inference or broker calls occur.
 
-`js/homepage.js` draws mean/median returns and confidence intervals, overlay
-return/drawdown trade-offs, and earnings structure composition directly from
-`data/results.json`. Model highlighting and task/mandate selections persist
+`js/agent-design.js` presents a recorded analyzer/executor example plus separate,
+explicitly illustrative AVSR and QOCR interactives. The AVSR sliders generate
+synthetic smile curves; the QOCR example maps a bucketed intent to a candidate
+contract from a fixed illustrative chain. These examples are not backtests.
+
+`js/homepage.js` draws mean/median returns and confidence intervals, distributions,
+overlay trade-offs and per-asset active returns from `data/results.json` and
+`data/distributions.json`. Model, asset, task and mandate selections persist
 across language switches. Source results are not modified. The QFinZero section
 links to the official project and its UPQ, ESP and PMB documentation; it does not
 contact any financial service from this static website.

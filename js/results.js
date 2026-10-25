@@ -82,11 +82,16 @@
       a.className = 'arrow';
       a.textContent = sortKey === c.k ? (sortDir === 1 ? '▲' : '▼') : '▲';
       th.appendChild(a);
-      th.onclick = () => {
+      const sort = () => {
         if (sortKey === c.k) sortDir = -sortDir;
         else { sortKey = c.k; sortDir = c.k === 'model' ? 1 : -1; }
         render();
+        head.children[cols.indexOf(c)]?.focus({preventScroll:true});
       };
+      th.onclick = sort;
+      th.tabIndex = 0;
+      th.setAttribute('aria-sort',sortKey===c.k?(sortDir===1?'ascending':'descending'):'none');
+      th.onkeydown = event => { if(event.key==='Enter'||event.key===' '){event.preventDefault();sort();} };
       head.appendChild(th);
     });
 
@@ -132,6 +137,7 @@
     document.getElementById('results-note').textContent = t(NOTES[current]);
 
     const chartHost = document.getElementById('dist-chart');
+    if(!chartHost)return;
     const selectedTask = TASKS.find(x => x.key === current);
     if (selectedTask.kind === 'episode') {
       chartHost.closest('div').style.display = '';
@@ -171,6 +177,11 @@
 
   window.addEventListener('lo:languagechange', () => {
     if (data && dist) { buildSeg(); render(); }
+  });
+  window.addEventListener('lo:result-task',event=>{
+    if(!data||!dist||!TASKS.some(task=>task.key===event.detail.task))return;
+    if(current===event.detail.task)return;
+    current=event.detail.task;sortKey=null;sortDir=-1;buildSeg();render();
   });
 
   init().catch(e => {

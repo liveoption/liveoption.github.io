@@ -32,7 +32,7 @@ function jitter(i, seed) {
  * the median over it. Clipped at the whisker range so a single -170% episode
  * does not flatten the rest; the count of clipped points is annotated.
  */
-function distributionChart(host, models, series, task) {
+function distributionChart(host, models, series, task, selectedModel) {
   host.innerHTML = '';
   const rows = models.filter(m => (series[m.id] || {})[task]?.length);
   if (!rows.length) return;
@@ -73,6 +73,7 @@ function distributionChart(host, models, series, task) {
   rows.forEach((m, r) => {
     const v = [...series[m.id][task]].sort((a, b) => a - b);
     const y = padT + r * rowH + rowH / 2;
+    if (m.id === selectedModel) svg.appendChild(el('rect', {x:0,y:y-17,width:W,height:34,rx:6,fill:'#eaf5f2'}));
     const q1 = quantile(v, 0.25), med = quantile(v, 0.5), q3 = quantile(v, 0.75);
     const clipped = v.filter(d => d < lo || d > hi).length;
 
