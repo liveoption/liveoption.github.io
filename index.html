@@ -8,9 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="js/locales.js?v=7"></script>
+<script src="js/locales.js?v=8"></script>
 <script src="js/i18n.js?v=3"></script>
-<link rel="stylesheet" href="css/style.css?v=7">
+<link rel="stylesheet" href="css/style.css?v=8">
 </head>
 <body>
 
@@ -131,27 +131,30 @@
       <p><span data-i18n="tasks.intro">Each suite isolates a different failure mode, and each one is in the demos.</span></p>
     </div>
     <div class="cards">
-      <div class="card">
+      <button class="card task-detail-card" type="button" data-scene="overlay" data-scene-view="example" aria-haspopup="dialog" aria-controls="scenario-guide">
         <span class="tag"><span data-i18n="task.overlay.name">Portfolio overlay</span></span>
-        <h3><span data-i18n="tasks.overlayTitle">Hedging and covered calls</span></h3>
-        <p>
+        <span class="scenario-card-title" data-i18n="tasks.overlayTitle">Hedging and covered calls</span>
+        <span class="scenario-card-body">
           <span data-i18n="tasks.overlayBody">A year-long option overlay on an existing equity position, five assets per mandate. The question is not whether the stock went up — it is whether the overlay beat simply holding the stock. Active return is negative for all eight models under hedging and seven of eight under covered calls, while drawdown falls for seven of eight. The overlay changes the risk profile; it does not add alpha.</span>
-        </p>
-      </div>
-      <div class="card">
+        </span>
+        <span class="demo-link" data-i18n="case.open">View a recorded example ＋</span>
+      </button>
+      <button class="card task-detail-card" type="button" data-scene="earnings" data-scene-view="example" aria-haspopup="dialog" aria-controls="scenario-guide">
         <span class="tag orange"><span data-i18n="task.earnings.name">Earnings bet</span></span>
-        <h3><span data-i18n="tasks.earningsTitle">Event-driven volatility</span></h3>
-        <p>
+        <span class="scenario-card-title" data-i18n="tasks.earningsTitle">Event-driven volatility</span>
+        <span class="scenario-card-body">
           <span data-i18n="tasks.earningsBody">Enter two sessions before a scheduled announcement and carry the position through it. Implied volatility is at its highest exactly when the agent is deciding what to pay. Eighty-three percent of opened structures are net debit: the panel buys premium into a scheduled volatility contraction, and theta is large and negative for every model.</span>
-        </p>
-      </div>
-      <div class="card">
+        </span>
+        <span class="demo-link" data-i18n="case.open">View a recorded example ＋</span>
+      </button>
+      <button class="card task-detail-card" type="button" data-scene="0dte" data-scene-view="example" aria-haspopup="dialog" aria-controls="scenario-guide">
         <span class="tag gold"><span data-i18n="task.0dte.name">0DTE intraday</span></span>
-        <h3><span data-i18n="tasks.0dteTitle">Same-day expiry on SPY</span></h3>
-        <p>
+        <span class="scenario-card-title" data-i18n="tasks.0dteTitle">Same-day expiry on SPY</span>
+        <span class="scenario-card-body">
           <span data-i18n="tasks.0dteBody">102 sessions of options that expire at the close, where gamma and theta are both extreme and a position left open is a position decaying. Every model loses on the majority of sessions. The three positive means in the panel rest on a handful of right-tail sessions and do not survive a realistic half-spread charge.</span>
-        </p>
-      </div>
+        </span>
+        <span class="demo-link" data-i18n="case.open">View a recorded example ＋</span>
+      </button>
     </div>
   </div>
 </section>
@@ -199,7 +202,7 @@
         <article><h3 data-i18n="infra.brokerTitle">PMB · Stateful brokerage simulation</h3><p data-i18n="infra.brokerBody">Simulated accounts, order lifecycles, fills and margin checks support portfolio replay and execution records.</p><a href="https://github.com/CityU-MLO/qfinzero/blob/main/docs/en/pmb/agent-guide.md" target="_blank" rel="noopener" data-i18n="infra.brokerDocs">Trading guide ↗</a></article>
       </div>
     </div>
-    <div class="infra-footer"><p data-i18n="infra.boundary">LiveOption defines the option-trading benchmark and agent workflow. QFinZero runs separately and supplies the financial services; it is an open-source project under the MIT License.</p><a class="btn btn-teal" href="https://github.com/CityU-MLO/qfinzero" target="_blank" rel="noopener" data-i18n="infra.repository">Explore QFinZero on GitHub ↗</a></div>
+    <div class="infra-footer"><p data-i18n="infra.boundary">LiveOption defines the option-trading benchmark and agent workflow. QFinZero runs separately and supplies the financial services; it is an open-source project under the MIT License.</p><a class="btn btn-teal" href="qfinzero.html" data-i18n="qfz.details">View QFinZero details →</a></div>
   </div>
 </section>
 
@@ -286,7 +289,8 @@
   </div>
 </footer>
 
-<script src="js/scenes.js?v=4"></script>
+<script src="js/scenes.js?v=5"></script>
+<script src="js/case-preview.js?v=1"></script>
 <script src="js/charts.js?v=3"></script>
 <script src="js/results.js?v=3"></script>
 <script src="js/homepage.js?v=1"></script>

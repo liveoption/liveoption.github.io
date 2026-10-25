@@ -635,6 +635,48 @@ window.LO_LOCALES = {
   }
 };
 
+// Task case dialogs and the QFinZero project detail page.
+{
+  const messages={
+    'case.open':['View a recorded example ＋','查看案例详情 ＋','記録済みの事例を見る ＋'],
+    'case.views':['Task detail views','任务详情视图','タスク詳細の表示'],
+    'case.example':['Recorded example','案例回放','記録済み事例'],
+    'case.guide':['Scenario guide','场景说明','シナリオの説明'],
+    'case.recordedNote':['Real archived records for one selected case and model. This preview does not run inference or submit trades.','以下为所选案例与模型的真实归档记录，不调用模型或发起交易。','選択した事例とモデルの実際の保存記録です。推論や新規取引は実行しません。'],
+    'case.chartNote':['Historical prices cover the recorded window. Times are ET. Blue markers: decisions with proposed orders; gray: no proposal. A marker does not indicate a fill. Scroll charts horizontally on narrow screens.','行情展示已记录时段，时间为 ET。蓝点表示提出订单，灰点表示未提议订单；决策标记不代表成交。窄屏下可横向滑动图表。','価格は保存期間全体を示し、時刻は米東部時間です。青は注文提案あり、灰は提案なしの判断で、約定を示しません。狭い画面では図を横にスクロールできます。'],
+    'case.fullReplay':['Open the complete replay ↗','查看完整回放 ↗','完全なリプレイを開く ↗'],
+    'qfz.details':['View QFinZero details →','查看 QFinZero 详情 →','QFinZeroの詳細を見る →'],
+    'qfz.metaTitle':['QFinZero — LiveOption infrastructure','QFinZero — LiveOption 基础设施','QFinZero — LiveOptionのインフラ'],
+    'qfz.metaDescription':['Explore QFinZero, the financial toolchain behind LiveOption: market data, news and events, simulated brokerage, code, paper and citation.','了解 LiveOption 依赖的金融工具链 QFinZero：行情、新闻事件、模拟券商，以及代码、论文和引用。','LiveOptionを支える金融ツールチェーンQFinZeroの市場データ、ニュース、模擬取引、コード、論文、引用を紹介します。'],
+    'qfz.venue':['ACL 2026 · System Demonstrations','ACL 2026 · 系统演示','ACL 2026・システムデモ'],
+    'qfz.intro':['A shared financial environment for agents to retrieve market data, understand events and manage simulated trades through consistent, time-aligned interfaces.','通过一致、按时间对齐的接口，让 Agent 获取行情、理解事件并管理模拟交易的统一金融环境。','一貫した時刻整合インターフェースを通じて、市場情報の取得、イベントの理解、模擬取引の管理を行う統合金融環境です。'],
+    'qfz.code':['Explore the code ↗','查看源代码 ↗','ソースコードを見る ↗'],
+    'qfz.paper':['Read the ACL paper ↗','阅读 ACL 论文 ↗','ACL論文を読む ↗'],
+    'qfz.citation':['BibTeX citation ↓','BibTeX 引用 ↓','BibTeX引用 ↓'],
+    'qfz.capabilities':['Capabilities','核心能力','主な機能'],
+    'qfz.capabilityTitle':['Three services, one financial environment','三个服务，统一金融环境','3つのサービスを1つの金融環境に'],
+    'qfz.capabilityIntro':['Consistent JSON schemas and time-aligned interfaces connect information retrieval with stateful trading simulation.','一致的 JSON 格式与时间对齐接口，将信息检索与有状态交易模拟连接起来。','共通のJSONスキーマと時刻整合インターフェースで、情報取得と状態を保持する取引シミュレーションをつなぎます。'],
+    'qfz.integration':['LiveOption integration','与 LiveOption 的关系','LiveOptionとの連携'],
+    'qfz.integrationTitle':['The infrastructure behind the benchmark','评测背后的基础设施','評価を支えるインフラ'],
+    'qfz.step1Title':['Observe the market at the decision time','获取决策时点的市场信息','判断時点の市場を観測'],
+    'qfz.step1Body':['LiveOption assembles the configured market and event context from QFinZero services for the agent.','LiveOption 从 QFinZero 服务中组装配置的行情与事件背景，提供给 Agent。','LiveOptionはQFinZeroから設定済みの市場・イベント情報をまとめ、エージェントに渡します。'],
+    'qfz.step2Title':['Turn a decision into simulated execution','将决策转为模拟执行','判断を模擬執行へ変換'],
+    'qfz.step2Body':['Agent proposals are checked against task rules and passed to the paper broker. Orders, fills and portfolio states remain distinct records.','Agent 的提议经过任务规则检查后交给模拟券商，订单、成交与组合状态分别记录。','エージェントの提案をタスク規則で確認し、模擬ブローカーへ渡します。注文・約定・保有状態は別々に記録します。'],
+    'qfz.step3Title':['Replay and evaluate the outcome','回放并评估结果','結果の再生と評価'],
+    'qfz.step3Body':['Recorded decisions and execution traces support the benchmark’s return, risk and behaviour analysis.','利用保存的决策与执行记录，分析收益、风险与行为。','保存した判断と執行記録から、収益・リスク・行動を分析します。'],
+    'qfz.seeReplay':['See a LiveOption replay →','查看 LiveOption 回放 →','LiveOptionのリプレイを見る →'],
+    'qfz.paperSection':['Paper and citation','论文与引用','論文と引用'],
+    'qfz.paperTitle':['QFinZero · ACL 2026','QFinZero · ACL 2026','QFinZero・ACL 2026'],
+    'qfz.paperMeta':['System Demonstrations · pages 68–77','System Demonstrations · 第 68–77 页','System Demonstrations・68–77ページ'],
+    'qfz.downloadCitation':['Download BibTeX','下载 BibTeX','BibTeXを保存'],
+    'qfz.citationNote':['Original citation supplied by the authors; preserved in English.','以下为作者提供的原始引用，保留英文内容。','著者提供の原文引用を英語のまま掲載しています。'],
+    'qfz.citationLoading':['Loading citation…','正在加载引用…','引用を読み込み中…'],
+    'qfz.citationError':['Citation could not be loaded. Use the BibTeX download link or the ACL paper page.','引用加载失败，可通过 BibTeX 下载链接或 ACL 论文页面获取。','引用を読み込めません。BibTeXの保存リンクまたはACL論文ページをご利用ください。'],
+    'qfz.footer':['QFinZero · Financial infrastructure for LLM agents','QFinZero · 面向 LLM Agent 的金融基础设施','QFinZero・LLMエージェント向け金融インフラ'],
+  };
+  for(const [key,values] of Object.entries(messages))['en','cn','jp'].forEach((language,index)=>{window.LO_LOCALES[language][key]=values[index];});
+}
+
 // Homepage figures and the QFinZero infrastructure section.
 {
   const messages = {

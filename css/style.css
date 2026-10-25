@@ -542,6 +542,43 @@ html:lang(zh-CN) .hero .lede, html:lang(ja) .hero .lede { line-height: 1.9; }
   .replay-toolbar { align-items: flex-start; }
 }
 
+/* Recorded examples and the infrastructure project detail page. */
+.task-detail-card { display: flex; flex-direction: column; align-items: flex-start; text-align: left; font-family: var(--font-body); color: var(--text); cursor: pointer; }
+.task-detail-card:hover { border-color: var(--primary-dark); }
+.task-detail-card .demo-link { margin-top: 1.5rem; }
+.scene-view-tabs { margin-bottom: 1.5rem; }
+.case-controls { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 1rem; margin-bottom: 1rem; }
+.case-kpis { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: .6rem; margin: 1.2rem 0; }
+.case-kpis > div { border: 1px solid var(--border); border-radius: 8px; padding: .8rem; }
+.case-kpis span { display: block; font-size: .7rem; color: var(--text-2); line-height: 1.5; }
+.case-kpis strong { display: block; margin-top: .5rem; font: 600 1rem var(--font-mono); }
+.case-chart-tabs { margin: 1rem 0; }
+.case-chart-scroll { overflow: auto; width: 100%; min-width: 0; margin: 1rem 0; border: 1px solid var(--border); border-radius: 10px; }
+.case-chart-scroll svg { display: block; width: 100%; min-width: 600px; }
+.case-chart-scroll text { fill: var(--text-2); font: 12px var(--font-body); }
+.case-chart-scroll [role=button] { cursor: pointer; }
+.case-chart-scroll:focus-visible, .case-chart-scroll [role=button]:focus-visible { outline: 2px solid var(--primary-dark); outline-offset: 2px; }
+.case-return-key { display: flex; flex-wrap: wrap; gap: 1rem; font-size: .8rem; }
+.case-return-key span { display: inline-flex; align-items: center; gap: .4rem; }
+.case-return-key i { width: 18px; height: 3px; }
+.case-decision { margin: 1.5rem 0; border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem; }
+.case-decision h3 { font-size: 1rem; }
+.case-decision h4 { margin: 1rem 0 .5rem; }
+.case-decision ul { padding-left: 1.2rem; font: .8rem/1.8 var(--font-mono); overflow-wrap: anywhere; }
+.case-reasoning { font-size: .88rem; line-height: 1.8; white-space: pre-wrap; max-height: 220px; overflow: auto; color: var(--text-2); }
+#scene-example .note { color: var(--text-2); }
+.qfz-hero .back-link { display: block; width: fit-content; margin-bottom: 1.5rem; text-align: left; }
+.qfz-hero h1 { font-size: clamp(3rem,8vw,6rem); }
+.qfz-steps { display: grid; gap: 1.5rem; }
+.qfz-steps article > span { font: 600 .8rem var(--font-mono); color: var(--primary-dark); }
+.qfz-steps h3 { margin-top: .5rem; }
+.qfz-citation { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 560px; overflow: auto; }
+.qfz-doi { overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .case-controls { grid-template-columns: minmax(0,1fr); }
+  .case-kpis { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+
 /* Scenario cards open compact editorial guides. */
 .scenario-card { display: flex; flex-direction: column; align-items: flex-start; text-align: left; font-family: var(--font-body); color: var(--text); cursor: pointer; }
 .scenario-card-title { display: block; font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; line-height: 1.45; margin-bottom: 1rem; }

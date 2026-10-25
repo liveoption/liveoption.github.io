@@ -14,6 +14,7 @@
   let selected = null;
   let opener = null;
   let previousOverflow = '';
+  let view = 'guide';
 
   function svg(task, viewBox, content) {
     return `<svg class="scene-drawing" viewBox="${viewBox}" role="img" aria-label="${text(`scenes.${task}.figure`)}" xmlns="http://www.w3.org/2000/svg">
@@ -71,9 +72,12 @@
 
   function render() {
     if (!selected) return;
+    const focusedView=dialog.contains(document.activeElement)?document.activeElement.dataset.sceneView:null;
     document.getElementById('scene-tag').textContent = t(`task.${selected}.name`);
     document.getElementById('scene-title').textContent = t(`task.${selected}.title`);
     document.getElementById('scene-content').innerHTML = `
+      <div class="seg scene-view-tabs" role="group" aria-label="${text('case.views')}">${['example','guide'].map(id=>`<button type="button" data-scene-view="${id}" class="${view===id?'on':''}" aria-pressed="${view===id}">${text(`case.${id}`)}</button>`).join('')}</div>
+      ${view === 'example' ? '<div id="scene-example"></div>' : `
       <div class="scene-goal"><h3>${text('scenes.goal')}</h3><p>${text(`scenes.${selected}.goal`)}</p></div>
       ${illustration(selected)}
       <div class="scene-explanation-grid">
@@ -85,13 +89,17 @@
           <p class="scene-case-focus"><strong>${text('scenes.focus')}</strong><br>${text(`scenes.case.${id}`)}</p>
         </article>`).join('')}</div>
         <p class="note">${text('scenes.recordScope')}</p>
-      </section>`;
+      </section>`}`;
+    dialog.querySelectorAll('[data-scene-view]').forEach(button=>{button.onclick=()=>{view=button.dataset.sceneView;render();};});
+    window.dispatchEvent(new CustomEvent('lo:scene-render',{detail:{task:selected,cases:cases[selected],view}}));
+    if(focusedView)dialog.querySelector(`[data-scene-view="${focusedView}"]`)?.focus({preventScroll:true});
   }
 
   document.querySelectorAll('[data-scene]').forEach(button => {
     button.addEventListener('click', () => {
       selected = button.dataset.scene;
       if (!cases[selected]) return;
+      view = button.dataset.sceneView || 'guide';
       opener = button;
       render();
       previousOverflow = document.body.style.overflow;
@@ -106,5 +114,5 @@
     document.body.style.overflow = previousOverflow;
     opener?.focus({ preventScroll: true });
   });
-  window.addEventListener('lo:languagechange', render);
+  window.addEventListener('lo:languagechange',()=>{if(dialog.open)render();});
 })();

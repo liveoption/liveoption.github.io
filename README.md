@@ -3,9 +3,10 @@
 Static project website with benchmark results, figures, and recorded model demos.
 No API key or backend is needed.
 
-- `index.html`: project overview, scenario guide dialogs, three interactive benchmark charts, a QFinZero infrastructure section, the arXiv citation and collapsible detailed results.
+- `index.html`: project overview, task dialogs with archived case charts and decisions, three interactive benchmark charts, a QFinZero infrastructure section, the arXiv citation and collapsible detailed results.
+- `qfinzero.html`: QFinZero project details, its role in LiveOption, official GitHub and ACL paper links, and the complete downloadable author-supplied BibTeX.
 - `demos.html`: recorded demos, selected by task, scenario and model. All eight models share one selector and opening comparison. Source builds remain internal provenance; reference inputs remain accessible by model and input differences are marked. Views separate the opening comparison, historical candles, paginated decision journal and run-level statistics.
-- Both pages use the invisible Statcounter project `13361926`.
+- All public pages use the invisible Statcounter project `13361926`.
 
 The Code buttons are intentionally disabled until a repository URL is supplied.
 
@@ -27,7 +28,7 @@ Edit the static files and push to main to update the website.
 
 ## Languages and future features
 
-Both pages support English (`en`), Simplified Chinese (`cn`), and Japanese (`jp`).
+All pages support English (`en`), Simplified Chinese (`cn`), and Japanese (`jp`).
 The navigation selector remembers the choice; `?lang=cn` or `?lang=jp` shares a
 specific language and works alongside demo task/scenario parameters. The initial
 language follows an explicit URL, then a saved preference, then the browser.
@@ -46,6 +47,9 @@ node scripts/check-i18n.mjs
 
 Scenario guides are implemented in `js/scenes.js`. Their original SVG diagrams
 are conceptual illustrations; all captions and guide text are localized.
+`js/case-preview.js` adds a separate recorded-example tab to the same dialog,
+using the existing replay archives for prices, returns, decisions and proposed
+orders. It loads one case/model on demand; no inference or broker calls occur.
 
 `js/homepage.js` draws mean/median returns and confidence intervals, overlay
 return/drawdown trade-offs, and earnings structure composition directly from

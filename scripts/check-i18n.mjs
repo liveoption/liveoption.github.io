@@ -18,7 +18,7 @@ for (const language of ['en', 'cn', 'jp']) {
     assert.deepEqual(tokens(locales[language][key]), tokens(locales.en[key]), `Placeholder mismatch: ${language}.${key}`);
   }
 }
-for (const filename of ['index.html', 'demos.html']) {
+for (const filename of ['index.html', 'demos.html', 'qfinzero.html']) {
   const html = read(filename);
   for (const [, key] of html.matchAll(/data-i18n(?:-[\w-]+)?="([\w.-]+)"/g)) {
     assert.ok(locales.en[key], `${filename}: unknown translation ${key}`);
@@ -26,7 +26,7 @@ for (const filename of ['index.html', 'demos.html']) {
   assert.ok(html.includes('data-language-select'), `${filename}: missing language selector`);
   assert.equal(html.split('sc_project=13361926').length, 2, `${filename}: analytics count`);
 }
-for (const filename of ['js/playground.js', 'js/results.js', 'js/charts.js', 'js/scenes.js', 'js/replay.js', 'js/homepage.js']) {
+for (const filename of ['js/playground.js', 'js/results.js', 'js/charts.js', 'js/scenes.js', 'js/replay.js', 'js/homepage.js', 'js/case-preview.js', 'js/qfinzero.js']) {
   const code = read(filename);
   for (const [, key] of code.matchAll(/(?:\bt|labelKey):?\(?\s*'([\w.-]+)'/g)) {
     assert.ok(locales.en[key], `${filename}: unknown translation ${key}`);
