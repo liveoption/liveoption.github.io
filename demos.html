@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="js/locales.js?v=9"></script>
+<script src="js/locales.js?v=10"></script>
 <script src="js/i18n.js?v=3"></script>
 <link rel="stylesheet" href="css/style.css?v=9">
 </head>
@@ -42,9 +42,9 @@
   <header class="demo-header">
     <div class="container">
       <a class="back-link" href="index.html"><span data-i18n="demo.back">← LiveOption project</span></a>
-      <div class="eyebrow"><span data-i18n="demos.eyebrow">Recorded demos</span></div>
-      <h1><span data-i18n="demo.title">Explore model decisions</span></h1>
-      <p><span data-i18n="demo.intro">Choose a task, then a scenario. Compare the observation, reasoning and option orders from our recorded runs.</span></p>
+      <div class="eyebrow"><span data-i18n="demos.eyebrow">LiveOption</span></div>
+      <h1><span data-i18n="demo.title">Recorded runs</span></h1>
+      <p><span data-i18n="demo.intro">Candles, model decisions, orders and account results from recorded runs.</span></p>
     </div>
   </header>
   <section class="demo-browser" aria-label="Recorded demo browser" data-i18n-aria-label="demo.region">
@@ -59,8 +59,8 @@
             <div class="scenario-list" id="scenario-list" aria-label="Scenario selection" data-i18n-aria-label="demo.scenarioSelection"></div>
           </div>
           <details class="recording-note">
-            <summary><span data-i18n="demo.about">About these recordings</span></summary>
-            <p class="note"><span data-i18n="demo.aboutBody">All recorded models appear together. Observations may differ in news or portfolio state; differences are marked in the opening comparison.</span></p>
+            <summary><span data-i18n="demo.about">About the records</span></summary>
+            <p class="note"><span data-i18n="demo.aboutBody">Inputs can differ between models; the opening comparison marks these differences relative to the first model. Later decisions use each model’s own holdings. Only available records are shown.</span></p>
           </details>
         </aside>
         <div class="pg-main" aria-busy="false" id="demo-main">
@@ -69,7 +69,7 @@
             <h2 id="sc-title"><span data-i18n="demo.chooseScenario">Choose a scenario</span></h2>
             <p id="sc-blurb"></p>
             <div class="controls">
-              <button class="btn btn-sm" id="toggle-prompt" aria-expanded="false" aria-controls="prompt-box"><span data-i18n="demo.showObservation">Show observation</span></button>
+              <button class="btn btn-sm" id="toggle-prompt" aria-expanded="false" aria-controls="prompt-box"><span data-i18n="demo.showObservation">Input text</span></button>
             </div>
             <div class="prompt-box" id="prompt-box" hidden></div>
             <p class="note" id="sc-meta"></p>
@@ -77,9 +77,9 @@
           <div class="replay-tabs seg" id="replay-tabs" role="group" aria-label="Demo views" data-i18n-aria-label="replay.views" hidden></div>
           <div id="replay-host" hidden></div>
           <div class="panel" id="opening-panel">
-            <h2 class="answers-heading"><span data-i18n="demo.answers">Recorded model decisions</span></h2>
-            <p class="note answers-intro"><span data-i18n="demo.answersIntro">Reasoning, proposed option legs and orders resolved by the engine.</span></p>
-            <p class="note original-note" data-i18n="demo.original">Observations, model replies and order identifiers are original benchmark records (English).</p>
+            <h2 class="answers-heading"><span data-i18n="demo.answers">Opening decisions</span></h2>
+            <p class="note answers-intro"><span data-i18n="demo.answersIntro">Model reasoning, proposed option legs and the resulting order proposals.</span></p>
+            <p class="note original-note" data-i18n="demo.original">Inputs, replies and order identifiers are shown in their original language.</p>
             <div class="answers" id="answers"></div>
           </div>
         </div>

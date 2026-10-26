@@ -8,14 +8,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="js/locales.js?v=9"></script>
+<script src="js/locales.js?v=10"></script>
 <script src="js/i18n.js?v=3"></script>
 <link rel="stylesheet" href="css/style.css?v=9">
 </head>
 <body class="qfz-page">
 <nav class="nav"><div class="container">
   <a class="brand" href="index.html"><span class="mark">◧</span><span><span class="lo-a">Live</span><span class="lo-b">Option</span></span></a>
-  <div class="nav-links"><a href="index.html" data-i18n="nav.home">Project home</a><a href="#capabilities" data-i18n="qfz.capabilities">Capabilities</a><a href="#integration" data-i18n="qfz.integration">LiveOption integration</a><a href="#cite" data-i18n="nav.citation">Citation</a></div>
+  <div class="nav-links"><a href="index.html" data-i18n="nav.home">Project home</a><a href="#capabilities" data-i18n="qfz.capabilities">Services</a><a href="#integration" data-i18n="qfz.integration">Use in LiveOption</a><a href="#cite" data-i18n="nav.citation">Citation</a></div>
   <div class="nav-actions">
     <select class="language-select" data-language-select aria-label="Language" data-i18n-aria-label="nav.language"><option value="en" lang="en">EN</option><option value="cn" lang="zh-CN">中文</option><option value="jp" lang="ja">日本語</option></select>
     <a class="btn btn-sm" href="https://github.com/CityU-MLO/qfinzero" target="_blank" rel="noopener">GitHub ↗</a>
@@ -27,37 +27,37 @@
   <div class="pill" data-i18n="qfz.venue">ACL 2026 · System Demonstrations</div>
   <h1>QFinZero</h1>
   <p class="tagline" lang="en">A Unified Financial Toolchain for LLM-Based Trading Agents</p>
-  <p class="lede" data-i18n="qfz.intro">A shared financial environment for agents to retrieve market data, understand events and manage simulated trades through consistent, time-aligned interfaces.</p>
-  <div class="hero-actions"><a class="btn btn-primary" href="https://github.com/CityU-MLO/qfinzero" target="_blank" rel="noopener" data-i18n="qfz.code">Explore the code ↗</a><a class="btn" href="https://aclanthology.org/2026.acl-demo.7/" target="_blank" rel="noopener" data-i18n="qfz.paper">Read the ACL paper ↗</a><a class="btn" href="#cite" data-i18n="qfz.citation">BibTeX citation ↓</a></div>
+  <p class="lede" data-i18n="qfz.intro">QFinZero provides market data, news and a simulated broker for trading agents, with shared data formats and time-aligned APIs.</p>
+  <div class="hero-actions"><a class="btn btn-primary" href="https://github.com/CityU-MLO/qfinzero" target="_blank" rel="noopener" data-i18n="qfz.code">GitHub ↗</a><a class="btn" href="https://aclanthology.org/2026.acl-demo.7/" target="_blank" rel="noopener" data-i18n="qfz.paper">ACL paper ↗</a><a class="btn" href="#cite" data-i18n="qfz.citation">BibTeX citation ↓</a></div>
 </div></header>
 <main>
 <section id="capabilities"><div class="container">
-  <div class="sec-head"><div class="eyebrow" data-i18n="qfz.capabilities">Capabilities</div><h2 data-i18n="qfz.capabilityTitle">Three services, one financial environment</h2><p data-i18n="qfz.capabilityIntro">Consistent JSON schemas and time-aligned interfaces connect information retrieval with stateful trading simulation.</p></div>
+  <div class="sec-head"><div class="eyebrow" data-i18n="qfz.capabilities">Services</div><h2 data-i18n="qfz.capabilityTitle">Market data, events and broker simulation</h2><p data-i18n="qfz.capabilityIntro">UPQ, ESP and PMB share JSON schemas and time-aligned interfaces.</p></div>
   <div class="cards">
-    <article class="card"><span class="tag">UPQ</span><h3 data-i18n="infra.marketTitle">UPQ · Market and option data</h3><p data-i18n="infra.marketBody">Historical bars, option chains and Greeks provide the market state used by the agent and the simulator.</p><a href="https://github.com/CityU-MLO/qfinzero/blob/main/docs/en/upq/agent-guide.md" target="_blank" rel="noopener" data-i18n="infra.marketDocs">Market data guide ↗</a></article>
-    <article class="card"><span class="tag orange">ESP</span><h3 data-i18n="infra.newsTitle">ESP · News and event context</h3><p data-i18n="infra.newsBody">Time-aligned news and earnings events supply context for the configured trading task.</p><a href="https://github.com/CityU-MLO/qfinzero/blob/main/docs/en/esp/README.md" target="_blank" rel="noopener" data-i18n="infra.newsDocs">News and events reference ↗</a></article>
-    <article class="card"><span class="tag gold">PMB</span><h3 data-i18n="infra.brokerTitle">PMB · Stateful brokerage simulation</h3><p data-i18n="infra.brokerBody">Simulated accounts, order lifecycles, fills and margin checks support portfolio replay and execution records.</p><a href="https://github.com/CityU-MLO/qfinzero/blob/main/docs/en/pmb/agent-guide.md" target="_blank" rel="noopener" data-i18n="infra.brokerDocs">Trading guide ↗</a></article>
+    <article class="card"><span class="tag">UPQ</span><h3 data-i18n="infra.marketTitle">UPQ · Market data</h3><p data-i18n="infra.marketBody">Historical bars, option chains and Greeks for the agent and broker simulator.</p><a href="https://github.com/CityU-MLO/qfinzero/blob/main/docs/en/upq/agent-guide.md" target="_blank" rel="noopener" data-i18n="infra.marketDocs">Market data guide ↗</a></article>
+    <article class="card"><span class="tag orange">ESP</span><h3 data-i18n="infra.newsTitle">ESP · News and events</h3><p data-i18n="infra.newsBody">News and earnings calendars queried as of the simulation time.</p><a href="https://github.com/CityU-MLO/qfinzero/blob/main/docs/en/esp/README.md" target="_blank" rel="noopener" data-i18n="infra.newsDocs">News and events reference ↗</a></article>
+    <article class="card"><span class="tag gold">PMB</span><h3 data-i18n="infra.brokerTitle">PMB · Broker simulation</h3><p data-i18n="infra.brokerBody">Accounts, orders, fills and margin checks for simulated trading.</p><a href="https://github.com/CityU-MLO/qfinzero/blob/main/docs/en/pmb/agent-guide.md" target="_blank" rel="noopener" data-i18n="infra.brokerDocs">Trading guide ↗</a></article>
   </div>
 </div></section>
 <section class="alt" id="integration"><div class="container">
-  <div class="sec-head"><div class="eyebrow" data-i18n="qfz.integration">LiveOption integration</div><h2 data-i18n="qfz.integrationTitle">The infrastructure behind the benchmark</h2><p data-i18n="infra.intro">QFinZero is the financial infrastructure behind the LiveOption release: market data, news and events, and a stateful simulated broker in one environment.</p></div>
+  <div class="sec-head"><div class="eyebrow" data-i18n="qfz.integration">Use in LiveOption</div><h2 data-i18n="qfz.integrationTitle">QFinZero in LiveOption</h2><p data-i18n="infra.intro">LiveOption uses QFinZero for market data, news and events, and simulated brokerage.</p></div>
   <div class="infra-layout">
     <div class="infra-flow" role="group" aria-label="LiveOption and QFinZero architecture" data-i18n-aria-label="infra.diagram">
-      <div class="infra-layer"><span class="tag">LiveOption</span><h3 data-i18n="infra.agentTitle">Tasks, agents and evaluation</h3><p data-i18n="infra.agentBody">Scenario rules, observations, model decisions and result analysis.</p></div>
-      <span class="infra-arrow" aria-hidden="true">↓</span><div class="infra-hub"><strong>QFinZero</strong><span data-i18n="infra.hub">Unified service hub · REST / Python APIs</span></div><span class="infra-arrow" aria-hidden="true">↓</span>
+      <div class="infra-layer"><span class="tag">LiveOption</span><h3 data-i18n="infra.agentTitle">Tasks and agents</h3><p data-i18n="infra.agentBody">Task rules, model inputs, decisions and evaluation.</p></div>
+      <span class="infra-arrow" aria-hidden="true">↓</span><div class="infra-hub"><strong>QFinZero</strong><span data-i18n="infra.hub">Service hub · REST / Python APIs</span></div><span class="infra-arrow" aria-hidden="true">↓</span>
       <div class="infra-services"><div><code>UPQ</code><span data-i18n="infra.marketShort">Market data</span></div><div><code>ESP</code><span data-i18n="infra.newsShort">News &amp; events</span></div><div><code>PMB</code><span data-i18n="infra.brokerShort">Paper broker</span></div></div>
-      <p class="note" data-i18n="infra.flowNote">Observations flow to the agent; decisions become simulated orders, fills and account states for evaluation.</p>
+      <p class="note" data-i18n="infra.flowNote">Market and account data go to the agent. Order proposals are passed to the simulator, which records fills and account changes.</p>
     </div>
-    <div class="qfz-steps"><article><span>01</span><h3 data-i18n="qfz.step1Title">Observe the market at the decision time</h3><p data-i18n="qfz.step1Body">LiveOption assembles the configured market and event context from QFinZero services for the agent.</p></article><article><span>02</span><h3 data-i18n="qfz.step2Title">Turn a decision into simulated execution</h3><p data-i18n="qfz.step2Body">Agent proposals are checked against task rules and passed to the paper broker. Orders, fills and portfolio states remain distinct records.</p></article><article><span>03</span><h3 data-i18n="qfz.step3Title">Replay and evaluate the outcome</h3><p data-i18n="qfz.step3Body">Recorded decisions and execution traces support the benchmark’s return, risk and behaviour analysis.</p></article></div>
+    <div class="qfz-steps"><article><span>01</span><h3 data-i18n="qfz.step1Title">Retrieve market and event data</h3><p data-i18n="qfz.step1Body">LiveOption queries QFinZero for the market and event data required by each task.</p></article><article><span>02</span><h3 data-i18n="qfz.step2Title">Submit simulated orders</h3><p data-i18n="qfz.step2Body">Proposals are checked against task rules before submission to the broker. Orders, fills and holdings are recorded separately.</p></article><article><span>03</span><h3 data-i18n="qfz.step3Title">Analyze the records</h3><p data-i18n="qfz.step3Body">LiveOption uses the saved records to calculate returns, risk metrics and trading behaviour.</p></article></div>
   </div>
-  <div class="infra-footer"><p data-i18n="infra.boundary">LiveOption defines the option-trading benchmark and agent workflow. QFinZero runs separately and supplies the financial services; it is an open-source project under the MIT License.</p><a class="btn" href="demos.html?task=overlay&amp;scenario=overlay-qqq-hedge&amp;view=market" data-i18n="qfz.seeReplay">See a LiveOption replay →</a></div>
+  <div class="infra-footer"><p data-i18n="infra.boundary">LiveOption defines the tasks and agent workflow. QFinZero runs separately and provides the financial services. QFinZero is MIT-licensed.</p><a class="btn" href="demos.html?task=overlay&amp;scenario=overlay-qqq-hedge&amp;view=market" data-i18n="qfz.seeReplay">See a LiveOption replay →</a></div>
 </div></section>
 <section id="cite"><div class="container narrow">
   <div class="sec-head"><div class="eyebrow" data-i18n="qfz.paperSection">Paper and citation</div><h2 data-i18n="qfz.paperTitle">QFinZero · ACL 2026</h2><p data-i18n="qfz.paperMeta">System Demonstrations · pages 68–77</p></div>
   <p lang="en">QFinZero: A Unified Financial Toolchain for LLM-Based Trading Agents</p>
   <p class="qfz-doi">DOI: <a href="https://doi.org/10.18653/v1/2026.acl-demo.7" target="_blank" rel="noopener">10.18653/v1/2026.acl-demo.7</a></p>
-  <div class="viz-links"><a class="btn" href="https://aclanthology.org/2026.acl-demo.7/" target="_blank" rel="noopener" data-i18n="qfz.paper">Read the ACL paper ↗</a><a class="btn" href="data/citations/qfinzero.bib" download="qfinzero.bib" data-i18n="qfz.downloadCitation">Download BibTeX</a></div>
-  <p class="note" data-i18n="qfz.citationNote">Original citation supplied by the authors; preserved in English.</p>
+  <div class="viz-links"><a class="btn" href="https://aclanthology.org/2026.acl-demo.7/" target="_blank" rel="noopener" data-i18n="qfz.paper">ACL paper ↗</a><a class="btn" href="data/citations/qfinzero.bib" download="qfinzero.bib" data-i18n="qfz.downloadCitation">Download BibTeX</a></div>
+  <p class="note" data-i18n="qfz.citationNote">Author-provided BibTeX.</p>
   <pre class="cite qfz-citation" id="qfz-citation" lang="en" tabindex="0"><span data-i18n="qfz.citationLoading">Loading citation…</span></pre>
 </div></section>
 </main>
